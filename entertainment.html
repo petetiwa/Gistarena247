@@ -3,12 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login — Gistarena247</title>
+<title>Entertainment — Gistarena247</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
 </head>
 <body>
 
@@ -66,67 +64,49 @@
     <a href="register.html">Register</a>
   </div>
 </nav>
+<div class="breadcrumb"><a href="index.html">Home</a> / Entertainment</div>
+
 <main id="main">
-  <div class="auth-wrap">
-    <div class="auth-card">
-      <span class="eyebrow mono">WELCOME BACK</span>
-      <h1>Log In</h1>
-      <p class="auth-sub">Catch up on the news and check your gigs.</p>
-
-      <form id="loginForm">
-        <div class="field">
-          <label for="login-email">Email or phone number</label>
-          <input type="text" id="login-email" placeholder="you@example.com" required>
+  <div class="category-hero">
+    <span class="eyebrow mono">ENTERTAINMENT</span>
+    <h1>Entertainment</h1>
+    <p>Music, movies, and the moments everyone's talking about.</p>
+  </div>
+  <div class="story-list">
+      <div class="story-row">
+        <span class="story-num mono">01</span>
+        <div class="story-row-main">
+          <h2><a href="#" style="color:inherit;">Nollywood Premiere Draws Big Weekend Crowd</a></h2>
+          <p>The latest release opened to a packed cinema hall, with fans lining up hours before showtime.</p>
+          <time>1h ago</time>
         </div>
-        <div class="field">
-          <label for="login-pass">Password</label>
-          <input type="password" id="login-pass" placeholder="••••••••" required>
+      </div>
+      <div class="story-row">
+        <span class="story-num mono">02</span>
+        <div class="story-row-main">
+          <h2><a href="#" style="color:inherit;">Singer Announces Surprise Nationwide Tour</a></h2>
+          <p>Dates across Lagos, Abuja, and Port Harcourt were revealed with tickets going live this week.</p>
+          <time>3h ago</time>
         </div>
-        <p id="loginMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
-        <button type="submit" class="auth-submit" id="loginSubmitBtn">Log In</button>
-      </form>
-
-      <p class="auth-foot">New here? <a href="register.html">Create an account</a></p>
-    </div>
+      </div>
+      <div class="story-row">
+        <span class="story-num mono">03</span>
+        <div class="story-row-main">
+          <h2><a href="#" style="color:inherit;">Reality Show Finale Sparks Online Debate</a></h2>
+          <p>Fans took to social media to react to the season's controversial final result.</p>
+          <time>6h ago</time>
+        </div>
+      </div>
+      <div class="story-row">
+        <span class="story-num mono">04</span>
+        <div class="story-row-main">
+          <h2><a href="#" style="color:inherit;">Comedian's New Skit Has Naija Twitter in Stitches</a></h2>
+          <p>The short clip racked up shares within hours of posting, becoming the week's biggest trend.</p>
+          <time>9h ago</time>
+        </div>
+      </div>
   </div>
 </main>
-
-<script>
-  const loginForm = document.getElementById('loginForm');
-  const loginMessage = document.getElementById('loginMessage');
-  const loginSubmitBtn = document.getElementById('loginSubmitBtn');
-
-  function showLoginMessage(text, isError) {
-    loginMessage.textContent = text;
-    loginMessage.style.display = 'block';
-    loginMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
-  }
-
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-pass').value;
-
-    loginSubmitBtn.disabled = true;
-    loginSubmitBtn.textContent = 'Logging in...';
-
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email: email,
-      password: password
-    });
-
-    loginSubmitBtn.disabled = false;
-    loginSubmitBtn.textContent = 'Log In';
-
-    if (error) {
-      showLoginMessage(error.message, true);
-      return;
-    }
-
-    showLoginMessage("Logged in! Redirecting...", false);
-    setTimeout(() => { window.location.href = "index.html"; }, 1000);
-  });
-</script>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
