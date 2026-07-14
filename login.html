@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 </head>
 <body>
 
@@ -71,7 +73,7 @@
       <h1>Log In</h1>
       <p class="auth-sub">Catch up on the news and check your gigs.</p>
 
-      <form onsubmit="return false;">
+      <form id="loginForm">
         <div class="field">
           <label for="login-email">Email or phone number</label>
           <input type="text" id="login-email" placeholder="you@example.com" required>
@@ -80,13 +82,51 @@
           <label for="login-pass">Password</label>
           <input type="password" id="login-pass" placeholder="••••••••" required>
         </div>
-        <button type="submit" class="auth-submit">Log In</button>
+        <p id="loginMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+        <button type="submit" class="auth-submit" id="loginSubmitBtn">Log In</button>
       </form>
 
       <p class="auth-foot">New here? <a href="register.html">Create an account</a></p>
     </div>
   </div>
 </main>
+
+<script>
+  const loginForm = document.getElementById('loginForm');
+  const loginMessage = document.getElementById('loginMessage');
+  const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+
+  function showLoginMessage(text, isError) {
+    loginMessage.textContent = text;
+    loginMessage.style.display = 'block';
+    loginMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
+  }
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-pass').value;
+
+    loginSubmitBtn.disabled = true;
+    loginSubmitBtn.textContent = 'Logging in...';
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+    loginSubmitBtn.disabled = false;
+    loginSubmitBtn.textContent = 'Log In';
+
+    if (error) {
+      showLoginMessage(error.message, true);
+      return;
+    }
+
+    showLoginMessage("Logged in! Redirecting...", false);
+    setTimeout(() => { window.location.href = "index.html"; }, 1000);
+  });
+</script>
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
