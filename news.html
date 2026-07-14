@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 </head>
 <body>
 
@@ -50,11 +52,13 @@
   </div>
   <div class="drawer-nav">
     <span class="divider-label">READ</span>
-    <a href="#main">Home</a>
+    <a href="index.html">Home</a>
     <a href="news.html">News</a>
     <a href="entertainment.html">Entertainment</a>
     <a href="business.html">Business</a>
     <a href="sports.html">Sports</a>
+    <span class="divider-label">CONTRIBUTE</span>
+    <a href="post-news.html">Post News</a>
     <span class="divider-label">WORK</span>
     <a href="jobs.html">Marketplace</a>
     <a href="jobs.html">Find Workers</a>
@@ -72,6 +76,7 @@
     <h1>News</h1>
     <p>The latest on government, infrastructure, and everyday life across Nigeria.</p>
   </div>
+  <div id="dynamicPosts"></div>
   <div class="story-list">
       <div class="story-row">
         <span class="story-num mono">01</span>
@@ -138,5 +143,34 @@
   </div>
 </footer>
 <script src="script.js"></script>
+<script>
+  (async () => {
+    const { data: posts, error } = await supabaseClient
+      .from('posts')
+      .select('*')
+      .eq('category', 'News')
+      .order('created_at', { ascending: false });
+
+    if (error || !posts || posts.length === 0) return;
+
+    const container = document.getElementById('dynamicPosts');
+    let html = '<div class="story-list">';
+    posts.forEach((post, i) => {
+      const num = String(i + 1).padStart(2, '0');
+      const when = new Date(post.created_at).toLocaleDateString();
+      html += `
+      <div class="story-row">
+        <span class="story-num mono">${num}</span>
+        <div class="story-row-main">
+          <h2>${post.title}</h2>
+          <p>${post.excerpt}</p>
+          <time>${when} · ${post.author || 'Gistarena247 Contributor'}</time>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  })();
+</script>
 </body>
 </html>

@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketplace — Gistarena247</title>
+<title>Post News — Gistarena247</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 </head>
 <body>
 
@@ -67,103 +69,44 @@
   </div>
 </nav>
 <main id="main">
-  <div class="jobs-hero">
-    <h1>Find Workers, Find Work</h1>
-    <p>Browse gigs posted by people and businesses near you, or list your own job in a few minutes.</p>
-  </div>
-  <div class="jobs-layout">
-    <aside class="filters">
-      <div class="filter-group">
-        <h3 class="mono">CATEGORY</h3>
-        <label class="filter-option"><input type="checkbox" checked> Home Services</label>
-        <label class="filter-option"><input type="checkbox"> Events</label>
-        <label class="filter-option"><input type="checkbox"> Logistics</label>
-        <label class="filter-option"><input type="checkbox"> Skilled Trade</label>
-        <label class="filter-option"><input type="checkbox"> Domestic Help</label>
-      </div>
-      <div class="filter-group">
-        <h3 class="mono">LOCATION</h3>
-        <label class="filter-option"><input type="checkbox" checked> Lagos</label>
-        <label class="filter-option"><input type="checkbox"> Abuja</label>
-        <label class="filter-option"><input type="checkbox"> Port Harcourt</label>
-        <label class="filter-option"><input type="checkbox"> Ibadan</label>
-      </div>
-      <div class="filter-group">
-        <h3 class="mono">PAY TYPE</h3>
-        <label class="filter-option"><input type="checkbox"> Daily</label>
-        <label class="filter-option"><input type="checkbox"> Per project</label>
-        <label class="filter-option"><input type="checkbox"> Hourly</label>
-      </div>
-      <button class="btn-solid" style="width:100%;">Apply Filters</button>
-    </aside>
-    <section class="jobs-results">
-      <div class="jobs-results-head">
-        <span>128 gigs found</span>
-        <span>Sorted by: Newest</span>
-      </div>
+  <div class="post-wrap">
 
-      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
-        <div class="job-row-main">
-          <span class="gig-tag mono">HOME SERVICES</span>
-          <h3>Generator Technician</h3>
-          <span class="gig-loc mono">Lekki, Lagos · Posted today</span>
-        </div>
-        <div class="job-row-side">
-          <span class="gig-price">₦25,000/day</span>
-          <span class="btn-ghost" style="display:inline-block;">View</span>
-        </div>
-      </a>
+    <div id="loggedOutNotice" class="post-notice" style="display:none;">
+      <p style="margin-bottom:14px;">You need to be logged in to post news.</p>
+      <a href="login.html">Log in</a> or <a href="register.html">create an account</a>
+    </div>
 
-      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
-        <div class="job-row-main">
-          <span class="gig-tag mono">EVENTS</span>
-          <h3>Weekend Event Decorator</h3>
-          <span class="gig-loc mono">Wuse, Abuja · Posted this week</span>
-        </div>
-        <div class="job-row-side">
-          <span class="gig-price">₦60,000/project</span>
-          <span class="btn-ghost" style="display:inline-block;">View</span>
-        </div>
-      </a>
+    <div id="postFormWrap" style="display:none;">
+      <span class="eyebrow mono">CONTRIBUTE</span>
+      <h1>Post a News Story</h1>
+      <p class="auth-sub">Your story will appear on the site right away.</p>
 
-      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
-        <div class="job-row-main">
-          <span class="gig-tag mono">LOGISTICS</span>
-          <h3>Delivery Rider</h3>
-          <span class="gig-loc mono">Port Harcourt · Daily</span>
+      <form id="postForm">
+        <div class="field">
+          <label for="post-title">Headline</label>
+          <input type="text" id="post-title" placeholder="e.g. New market opens in Ikeja" required>
         </div>
-        <div class="job-row-side">
-          <span class="gig-price">₦8,000/day</span>
-          <span class="btn-ghost" style="display:inline-block;">View</span>
+        <div class="field">
+          <label for="post-excerpt">Short summary</label>
+          <input type="text" id="post-excerpt" placeholder="A sentence or two about the story" required>
         </div>
-      </a>
+        <div class="field">
+          <label for="post-category">Category</label>
+          <select id="post-category">
+            <option value="News">News</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Business">Business</option>
+            <option value="Sports">Sports</option>
+          </select>
+        </div>
+        <p id="postMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+        <button type="submit" class="auth-submit" id="postSubmitBtn">Publish Story</button>
+      </form>
+    </div>
 
-      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
-        <div class="job-row-main">
-          <span class="gig-tag mono">DOMESTIC HELP</span>
-          <h3>Live-out Housekeeper, 3x/week</h3>
-          <span class="gig-loc mono">Ikeja, Lagos · Posted 2 days ago</span>
-        </div>
-        <div class="job-row-side">
-          <span class="gig-price">₦15,000/day</span>
-          <span class="btn-ghost" style="display:inline-block;">View</span>
-        </div>
-      </a>
-
-      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
-        <div class="job-row-main">
-          <span class="gig-tag mono">SKILLED TRADE</span>
-          <h3>Tiler for Bathroom Renovation</h3>
-          <span class="gig-loc mono">Bodija, Ibadan · Posted 3 days ago</span>
-        </div>
-        <div class="job-row-side">
-          <span class="gig-price">₦45,000/project</span>
-          <span class="btn-ghost" style="display:inline-block;">View</span>
-        </div>
-      </a>
-    </section>
   </div>
 </main>
+
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -195,5 +138,58 @@
   </div>
 </footer>
 <script src="script.js"></script>
+<script>
+  const loggedOutNotice = document.getElementById('loggedOutNotice');
+  const postFormWrap = document.getElementById('postFormWrap');
+  const postForm = document.getElementById('postForm');
+  const postMessage = document.getElementById('postMessage');
+  const postSubmitBtn = document.getElementById('postSubmitBtn');
+
+  let currentUser = null;
+
+  (async () => {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    currentUser = user;
+    if (user) {
+      postFormWrap.style.display = 'block';
+    } else {
+      loggedOutNotice.style.display = 'block';
+    }
+  })();
+
+  function showPostMessage(text, isError) {
+    postMessage.textContent = text;
+    postMessage.style.display = 'block';
+    postMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
+  }
+
+  postForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = document.getElementById('post-title').value.trim();
+    const excerpt = document.getElementById('post-excerpt').value.trim();
+    const category = document.getElementById('post-category').value;
+    const author = (currentUser && currentUser.user_metadata && currentUser.user_metadata.full_name)
+      ? currentUser.user_metadata.full_name
+      : 'Gistarena247 Contributor';
+
+    postSubmitBtn.disabled = true;
+    postSubmitBtn.textContent = 'Publishing...';
+
+    const { error } = await supabaseClient.from('posts').insert([
+      { title: title, excerpt: excerpt, category: category, author: author }
+    ]);
+
+    postSubmitBtn.disabled = false;
+    postSubmitBtn.textContent = 'Publish Story';
+
+    if (error) {
+      showPostMessage(error.message, true);
+      return;
+    }
+
+    showPostMessage("Story published! Check the " + category + " page.", false);
+    postForm.reset();
+  });
+</script>
 </body>
 </html>
