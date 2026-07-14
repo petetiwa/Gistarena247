@@ -99,6 +99,10 @@
             <option value="Sports">Sports</option>
           </select>
         </div>
+        <div class="field">
+          <label for="post-image">Photo (optional)</label>
+          <input type="file" id="post-image" accept="image/*">
+        </div>
         <p id="postMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
         <button type="submit" class="auth-submit" id="postSubmitBtn">Publish Story</button>
       </form>
@@ -168,6 +172,7 @@
     const title = document.getElementById('post-title').value.trim();
     const excerpt = document.getElementById('post-excerpt').value.trim();
     const category = document.getElementById('post-category').value;
+    const imageFile = document.getElementById('post-image').files[0];
     const author = (currentUser && currentUser.user_metadata && currentUser.user_metadata.full_name)
       ? currentUser.user_metadata.full_name
       : 'Gistarena247 Contributor';
@@ -175,8 +180,35 @@
     postSubmitBtn.disabled = true;
     postSubmitBtn.textContent = 'Publishing...';
 
+    let imageUrl = null;
+
+    if (imageFile) {
+      postSubmitBtn.textContent = 'Uploading photo...';
+      const fileExt = imageFile.name.split('.').pop();
+      const filePath = `${currentUser.id}/${Date.now()}.${fileExt}`;
+
+      const { error: uploadError } = await supabaseClient.storage
+        .from('post-images')
+        .upload(filePath, imageFile);
+
+      if (uploadError) {
+        postSubmitBtn.disabled = false;
+        postSubmitBtn.textContent = 'Publish Story';
+        showPostMessage(uploadError.message, true);
+        return;
+      }
+
+      const { data: publicUrlData } = supabaseClient.storage
+        .from('post-images')
+        .getPublicUrl(filePath);
+
+      imageUrl = publicUrlData.publicUrl;
+    }
+
+    postSubmitBtn.textContent = 'Saving story...';
+
     const { error } = await supabaseClient.from('posts').insert([
-      { title: title, excerpt: excerpt, category: category, author: author }
+      { title: title, excerpt: excerpt, category: category, author: author, image_url: imageUrl }
     ]);
 
     postSubmitBtn.disabled = false;

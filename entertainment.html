@@ -158,10 +158,12 @@
     posts.forEach((post, i) => {
       const num = String(i + 1).padStart(2, '0');
       const when = new Date(post.created_at).toLocaleDateString();
+      const imageHtml = post.image_url ? `<img class="story-row-image" src="${post.image_url}" alt="">` : '';
       html += `
       <div class="story-row">
         <span class="story-num mono">${num}</span>
         <div class="story-row-main">
+          ${imageHtml}
           <h2>${post.title}</h2>
           <p>${post.excerpt}</p>
           <time>${when}</time>

@@ -552,3 +552,9 @@
   border:2px solid var(--ink); padding:24px; text-align:center;
 }
 .post-notice a{border-bottom:1.5px solid var(--ink);}
+
+/* ---------- DYNAMIC POST IMAGE ---------- */
+.story-row-image{
+  width:100%; max-height:280px; object-fit:cover;
+  margin-bottom:14px; border:1px solid var(--line);
+}
