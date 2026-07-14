@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketplace — Gistarena247</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+  <div class="header-inner">
+    <a href="#main" class="logo">GIST<span>ARENA</span>247</a>
+    <div class="header-actions">
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="register.html" class="btn-solid">Register</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="ticker-bar" aria-label="Latest updates">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
+      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
+      <span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
+      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
+      <span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
+      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
+      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
+      <span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
+      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
+      <span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
+      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<nav class="drawer" id="drawer" aria-label="Main menu">
+  <div class="drawer-head">
+    <span class="logo" style="font-size:18px;">MENU</span>
+    <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+  </div>
+  <div class="drawer-nav">
+    <span class="divider-label">READ</span>
+    <a href="#main">Home</a>
+    <a href="#news">News</a>
+    <a href="#entertainment">Entertainment</a>
+    <a href="#business">Business</a>
+    <a href="#sports">Sports</a>
+    <span class="divider-label">WORK</span>
+    <a href="jobs.html">Marketplace</a>
+    <a href="jobs.html">Find Workers</a>
+    <a href="register.html?role=worker">Become a Worker</a>
+    <span class="divider-label">ACCOUNT</span>
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+  </div>
+</nav>
+<main id="main">
+  <div class="jobs-hero">
+    <h1>Find Workers, Find Work</h1>
+    <p>Browse gigs posted by people and businesses near you, or list your own job in a few minutes.</p>
+  </div>
+  <div class="jobs-layout">
+    <aside class="filters">
+      <div class="filter-group">
+        <h3 class="mono">CATEGORY</h3>
+        <label class="filter-option"><input type="checkbox" checked> Home Services</label>
+        <label class="filter-option"><input type="checkbox"> Events</label>
+        <label class="filter-option"><input type="checkbox"> Logistics</label>
+        <label class="filter-option"><input type="checkbox"> Skilled Trade</label>
+        <label class="filter-option"><input type="checkbox"> Domestic Help</label>
+      </div>
+      <div class="filter-group">
+        <h3 class="mono">LOCATION</h3>
+        <label class="filter-option"><input type="checkbox" checked> Lagos</label>
+        <label class="filter-option"><input type="checkbox"> Abuja</label>
+        <label class="filter-option"><input type="checkbox"> Port Harcourt</label>
+        <label class="filter-option"><input type="checkbox"> Ibadan</label>
+      </div>
+      <div class="filter-group">
+        <h3 class="mono">PAY TYPE</h3>
+        <label class="filter-option"><input type="checkbox"> Daily</label>
+        <label class="filter-option"><input type="checkbox"> Per project</label>
+        <label class="filter-option"><input type="checkbox"> Hourly</label>
+      </div>
+      <button class="btn-solid" style="width:100%;">Apply Filters</button>
+    </aside>
+    <section class="jobs-results">
+      <div class="jobs-results-head">
+        <span>128 gigs found</span>
+        <span>Sorted by: Newest</span>
+      </div>
+
+      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
+        <div class="job-row-main">
+          <span class="gig-tag mono">HOME SERVICES</span>
+          <h3>Generator Technician</h3>
+          <span class="gig-loc mono">Lekki, Lagos · Posted today</span>
+        </div>
+        <div class="job-row-side">
+          <span class="gig-price">₦25,000/day</span>
+          <span class="btn-ghost" style="display:inline-block;">View</span>
+        </div>
+      </a>
+
+      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
+        <div class="job-row-main">
+          <span class="gig-tag mono">EVENTS</span>
+          <h3>Weekend Event Decorator</h3>
+          <span class="gig-loc mono">Wuse, Abuja · Posted this week</span>
+        </div>
+        <div class="job-row-side">
+          <span class="gig-price">₦60,000/project</span>
+          <span class="btn-ghost" style="display:inline-block;">View</span>
+        </div>
+      </a>
+
+      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
+        <div class="job-row-main">
+          <span class="gig-tag mono">LOGISTICS</span>
+          <h3>Delivery Rider</h3>
+          <span class="gig-loc mono">Port Harcourt · Daily</span>
+        </div>
+        <div class="job-row-side">
+          <span class="gig-price">₦8,000/day</span>
+          <span class="btn-ghost" style="display:inline-block;">View</span>
+        </div>
+      </a>
+
+      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
+        <div class="job-row-main">
+          <span class="gig-tag mono">DOMESTIC HELP</span>
+          <h3>Live-out Housekeeper, 3x/week</h3>
+          <span class="gig-loc mono">Ikeja, Lagos · Posted 2 days ago</span>
+        </div>
+        <div class="job-row-side">
+          <span class="gig-price">₦15,000/day</span>
+          <span class="btn-ghost" style="display:inline-block;">View</span>
+        </div>
+      </a>
+
+      <a class="job-row" href="job-detail.html" style="color:inherit; display:flex;">
+        <div class="job-row-main">
+          <span class="gig-tag mono">SKILLED TRADE</span>
+          <h3>Tiler for Bathroom Renovation</h3>
+          <span class="gig-loc mono">Bodija, Ibadan · Posted 3 days ago</span>
+        </div>
+        <div class="job-row-side">
+          <span class="gig-price">₦45,000/project</span>
+          <span class="btn-ghost" style="display:inline-block;">View</span>
+        </div>
+      </a>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">GIST<span style="color:var(--ember);">ARENA</span>247</span>
+      <p>Local news and honest work, in one place. Built for Nigeria, updated every day.</p>
+    </div>
+    <div>
+      <h4>READ</h4>
+      <a href="#news">News</a>
+      <a href="#entertainment">Entertainment</a>
+      <a href="#business">Business</a>
+      <a href="#sports">Sports</a>
+    </div>
+    <div>
+      <h4>WORK</h4>
+      <a href="jobs.html">Marketplace</a>
+      <a href="jobs.html">Find Workers</a>
+      <a href="register.html?role=worker">Become a Worker</a>
+    </div>
+    <div>
+      <h4>ACCOUNT</h4>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Gistarena247. All rights reserved.</span>
+    <span>Lagos · Abuja · Port Harcourt</span>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
