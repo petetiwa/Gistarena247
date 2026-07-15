@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Post News — Gistarena247</title>
+<title>Edit Post — Gistarena247</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -73,39 +73,47 @@
   <div class="post-wrap">
 
     <div id="loggedOutNotice" class="post-notice" style="display:none;">
-      <p style="margin-bottom:14px;">You need to be logged in to post news.</p>
+      <p style="margin-bottom:14px;">You need to be logged in to edit posts.</p>
       <a href="login.html">Log in</a> or <a href="register.html">create an account</a>
     </div>
 
-    <div id="postFormWrap" style="display:none;">
-      <span class="eyebrow mono">CONTRIBUTE</span>
-      <h1>Post a News Story</h1>
-      <p class="auth-sub">Your story will appear on the site right away.</p>
+    <div id="notFoundNotice" class="post-notice" style="display:none;">
+      <p>This post couldn't be found, or doesn't belong to you.</p>
+      <a href="my-posts.html">Back to My Posts</a>
+    </div>
 
-      <form id="postForm">
+    <div id="editFormWrap" style="display:none;">
+      <span class="eyebrow mono">EDIT</span>
+      <h1>Edit Story</h1>
+
+      <form id="editForm">
         <div class="field">
-          <label for="post-title">Headline</label>
-          <input type="text" id="post-title" placeholder="e.g. New market opens in Ikeja" required>
+          <label for="edit-title">Headline</label>
+          <input type="text" id="edit-title" required>
         </div>
         <div class="field">
-          <label for="post-excerpt">Short summary</label>
-          <input type="text" id="post-excerpt" placeholder="A sentence or two about the story" required>
+          <label for="edit-excerpt">Short summary</label>
+          <input type="text" id="edit-excerpt" required>
         </div>
         <div class="field">
-          <label for="post-category">Category</label>
-          <select id="post-category">
+          <label for="edit-category">Category</label>
+          <select id="edit-category">
             <option value="News">News</option>
             <option value="Entertainment">Entertainment</option>
             <option value="Business">Business</option>
             <option value="Sports">Sports</option>
           </select>
         </div>
-        <div class="field">
-          <label for="post-image">Photo (optional)</label>
-          <input type="file" id="post-image" accept="image/*">
+        <div class="field" id="currentImageField" style="display:none;">
+          <label>Current photo</label>
+          <img id="currentImagePreview" style="width:100%; max-height:220px; object-fit:cover; border:1px solid var(--line); margin-bottom:10px;">
         </div>
-        <p id="postMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
-        <button type="submit" class="auth-submit" id="postSubmitBtn">Publish Story</button>
+        <div class="field">
+          <label for="edit-image">Replace photo (optional)</label>
+          <input type="file" id="edit-image" accept="image/*">
+        </div>
+        <p id="editMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+        <button type="submit" class="auth-submit" id="editSubmitBtn">Save Changes</button>
       </form>
     </div>
 
@@ -145,46 +153,77 @@
 <script src="script.js"></script>
 <script>
   const loggedOutNotice = document.getElementById('loggedOutNotice');
-  const postFormWrap = document.getElementById('postFormWrap');
-  const postForm = document.getElementById('postForm');
-  const postMessage = document.getElementById('postMessage');
-  const postSubmitBtn = document.getElementById('postSubmitBtn');
+  const notFoundNotice = document.getElementById('notFoundNotice');
+  const editFormWrap = document.getElementById('editFormWrap');
+  const editForm = document.getElementById('editForm');
+  const editMessage = document.getElementById('editMessage');
+  const editSubmitBtn = document.getElementById('editSubmitBtn');
+  const currentImageField = document.getElementById('currentImageField');
+  const currentImagePreview = document.getElementById('currentImagePreview');
 
+  const params = new URLSearchParams(window.location.search);
+  const postId = params.get('id');
   let currentUser = null;
+  let existingImageUrl = null;
+
+  function showEditMessage(text, isError) {
+    editMessage.textContent = text;
+    editMessage.style.display = 'block';
+    editMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
+  }
 
   (async () => {
     const { data: { user } } = await supabaseClient.auth.getUser();
-    currentUser = user;
-    if (user) {
-      postFormWrap.style.display = 'block';
-    } else {
+    if (!user) {
       loggedOutNotice.style.display = 'block';
+      return;
     }
+    currentUser = user;
+
+    if (!postId) {
+      notFoundNotice.style.display = 'block';
+      return;
+    }
+
+    const { data: post, error } = await supabaseClient
+      .from('posts')
+      .select('*')
+      .eq('id', postId)
+      .eq('user_id', user.id)
+      .single();
+
+    if (error || !post) {
+      notFoundNotice.style.display = 'block';
+      return;
+    }
+
+    document.getElementById('edit-title').value = post.title;
+    document.getElementById('edit-excerpt').value = post.excerpt;
+    document.getElementById('edit-category').value = post.category;
+    existingImageUrl = post.image_url;
+
+    if (post.image_url) {
+      currentImagePreview.src = post.image_url;
+      currentImageField.style.display = 'block';
+    }
+
+    editFormWrap.style.display = 'block';
   })();
 
-  function showPostMessage(text, isError) {
-    postMessage.textContent = text;
-    postMessage.style.display = 'block';
-    postMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
-  }
-
-  postForm.addEventListener('submit', async (e) => {
+  editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const title = document.getElementById('post-title').value.trim();
-    const excerpt = document.getElementById('post-excerpt').value.trim();
-    const category = document.getElementById('post-category').value;
-    const imageFile = document.getElementById('post-image').files[0];
-    const author = (currentUser && currentUser.user_metadata && currentUser.user_metadata.full_name)
-      ? currentUser.user_metadata.full_name
-      : 'Gistarena247 Contributor';
+    const title = document.getElementById('edit-title').value.trim();
+    const excerpt = document.getElementById('edit-excerpt').value.trim();
+    const category = document.getElementById('edit-category').value;
+    const imageFile = document.getElementById('edit-image').files[0];
 
-    postSubmitBtn.disabled = true;
-    postSubmitBtn.textContent = 'Publishing...';
+    editSubmitBtn.disabled = true;
+    editSubmitBtn.textContent = 'Saving...';
 
-    let imageUrl = null;
+    let imageUrl = existingImageUrl;
 
     if (imageFile) {
-      postSubmitBtn.textContent = 'Uploading photo...';
+      editSubmitBtn.textContent = 'Uploading photo...';
       const fileExt = imageFile.name.split('.').pop();
       const filePath = `${currentUser.id}/${Date.now()}.${fileExt}`;
 
@@ -193,9 +232,9 @@
         .upload(filePath, imageFile);
 
       if (uploadError) {
-        postSubmitBtn.disabled = false;
-        postSubmitBtn.textContent = 'Publish Story';
-        showPostMessage(uploadError.message, true);
+        editSubmitBtn.disabled = false;
+        editSubmitBtn.textContent = 'Save Changes';
+        showEditMessage(uploadError.message, true);
         return;
       }
 
@@ -206,22 +245,23 @@
       imageUrl = publicUrlData.publicUrl;
     }
 
-    postSubmitBtn.textContent = 'Saving story...';
+    editSubmitBtn.textContent = 'Saving...';
 
-    const { error } = await supabaseClient.from('posts').insert([
-      { title: title, excerpt: excerpt, category: category, author: author, image_url: imageUrl }
-    ]);
+    const { error } = await supabaseClient
+      .from('posts')
+      .update({ title: title, excerpt: excerpt, category: category, image_url: imageUrl })
+      .eq('id', postId)
+      .eq('user_id', currentUser.id);
 
-    postSubmitBtn.disabled = false;
-    postSubmitBtn.textContent = 'Publish Story';
+    editSubmitBtn.disabled = false;
+    editSubmitBtn.textContent = 'Save Changes';
 
     if (error) {
-      showPostMessage(error.message, true);
+      showEditMessage(error.message, true);
       return;
     }
 
-    showPostMessage("Story published! Check the " + category + " page.", false);
-    postForm.reset();
+    showEditMessage("Changes saved!", false);
   });
 </script>
 </body>
