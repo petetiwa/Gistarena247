@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 </head>
 <body>
 
@@ -71,7 +73,7 @@
 <main id="main">
 
   <section class="hero">
-    <div class="hero-lead">
+    <div class="hero-lead" id="heroLead">
       <span class="eyebrow mono">LEAD STORY · LAGOS</span>
       <h1><a href="article.html" style="color:inherit;">State Rolls Out New Blue Line Rail Schedule for Commuters</a></h1>
       <p>Officials say the expanded timetable is aimed at cutting morning commute times across the mainland, with more coaches added ahead of the festive season rush.</p>
@@ -83,6 +85,7 @@
     </div>
     <aside class="trending">
       <h2 class="mono">TRENDING NOW</h2>
+      <div id="trendingList">
       <div class="trend-item">
         <span class="trend-num">01</span>
         <span class="trend-text"><a href="#">Comedian's new skit has Naija Twitter in stitches</a></span>
@@ -103,6 +106,7 @@
         <span class="trend-num">05</span>
         <span class="trend-text"><a href="#">Rainy season warning issued for coastal states</a></span>
       </div>
+      </div>
     </aside>
   </section>
 
@@ -116,7 +120,7 @@
     <a href="#">View all</a>
   </div>
   <div class="cat-grid">
-    <div class="cat-col">
+    <div class="cat-col" id="catcol-news">
       <span class="cat-label mono">NEWS</span>
       <article>
         <h3><a href="#">Governors meet over flood preparedness plans</a></h3>
@@ -131,7 +135,7 @@
         <time>8h ago</time>
       </article>
     </div>
-    <div class="cat-col">
+    <div class="cat-col" id="catcol-entertainment">
       <span class="cat-label mono">ENTERTAINMENT</span>
       <article>
         <h3><a href="#">Nollywood premiere draws big weekend crowd</a></h3>
@@ -146,7 +150,7 @@
         <time>6h ago</time>
       </article>
     </div>
-    <div class="cat-col">
+    <div class="cat-col" id="catcol-business">
       <span class="cat-label mono">BUSINESS</span>
       <article>
         <h3><a href="#">Naira steadies as CBN issues new guidance</a></h3>
@@ -161,7 +165,7 @@
         <time>7h ago</time>
       </article>
     </div>
-    <div class="cat-col">
+    <div class="cat-col" id="catcol-sports">
       <span class="cat-label mono">SPORTS</span>
       <article>
         <h3><a href="#">Local league title race tightens in final weeks</a></h3>
@@ -245,6 +249,64 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+  (async () => {
+    const { data: posts, error } = await supabaseClient
+      .from('posts')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error || !posts || posts.length === 0) return;
+
+    // Lead story = most recent post overall
+    const lead = posts[0];
+    const heroLead = document.getElementById('heroLead');
+    const leadWhen = new Date(lead.created_at).toLocaleDateString();
+    heroLead.innerHTML = `
+      <span class="eyebrow mono">${lead.category.toUpperCase()}</span>
+      <h1><a href="post-view.html?id=${lead.id}" style="color:inherit;">${lead.title}</a></h1>
+      <p>${lead.excerpt}</p>
+      <div class="hero-meta">
+        <span>${leadWhen}</span>
+      </div>
+    `;
+
+    // Trending = next 5 most recent (excluding the lead)
+    const trending = posts.slice(1, 6);
+    if (trending.length > 0) {
+      const trendingList = document.getElementById('trendingList');
+      let trendHtml = '';
+      trending.forEach((post, i) => {
+        const num = String(i + 1).padStart(2, '0');
+        trendHtml += `
+        <div class="trend-item">
+          <span class="trend-num">${num}</span>
+          <span class="trend-text"><a href="post-view.html?id=${post.id}">${post.title}</a></span>
+        </div>`;
+      });
+      trendingList.innerHTML = trendHtml;
+    }
+
+    // Top Stories grid = latest 3 per category
+    const categories = ['News', 'Entertainment', 'Business', 'Sports'];
+    categories.forEach((cat) => {
+      const catPosts = posts.filter(p => p.category === cat).slice(0, 3);
+      if (catPosts.length === 0) return;
+      const col = document.getElementById('catcol-' + cat.toLowerCase());
+      if (!col) return;
+      let html = `<span class="cat-label mono">${cat.toUpperCase()}</span>`;
+      catPosts.forEach((post) => {
+        const when = new Date(post.created_at).toLocaleDateString();
+        html += `
+        <article>
+          <h3><a href="post-view.html?id=${post.id}">${post.title}</a></h3>
+          <time>${when}</time>
+        </article>`;
+      });
+      col.innerHTML = html;
+    });
+  })();
+</script>
 
 </body>
 </html>

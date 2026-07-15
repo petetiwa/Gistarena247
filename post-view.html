@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Business — Gistarena247</title>
+<title>Story — Gistarena247</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -69,50 +69,16 @@
     <a href="register.html">Register</a>
   </div>
 </nav>
-<div class="breadcrumb"><a href="index.html">Home</a> / Business</div>
+<div class="breadcrumb"><a href="index.html">Home</a> / <span id="breadcrumbCategory">Story</span></div>
 
 <main id="main">
-  <div class="category-hero">
-    <span class="eyebrow mono">BUSINESS</span>
-    <h1>Business</h1>
-    <p>Markets, money, and the companies shaping the Nigerian economy.</p>
-  </div>
-  <div id="dynamicPosts"></div>
-  <div class="story-list">
-      <div class="story-row">
-        <span class="story-num mono">01</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Naira Steadies as CBN Issues New Guidance</a></h2>
-          <p>The currency held firm in the parallel market following the latest central bank policy update.</p>
-          <time>2h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">02</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">SME Lending Scheme Opens Applications</a></h2>
-          <p>Small business owners can now apply for the new low-interest loan program launching this quarter.</p>
-          <time>4h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">03</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Telecom Firm Cuts Data Prices in New Bundles</a></h2>
-          <p>The revised pricing plan aims to make data more affordable for everyday users.</p>
-          <time>7h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">04</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Fintech Startup Raises New Funding Round</a></h2>
-          <p>The Lagos-based company plans to use the capital to expand into two new markets.</p>
-          <time>10h ago</time>
-        </div>
-      </div>
+  <div class="postview-wrap">
+    <div class="postview-body" id="postBody">
+      <p>Loading story...</p>
+    </div>
   </div>
 </main>
+
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
@@ -145,34 +111,43 @@
 </footer>
 <script src="script.js"></script>
 <script>
+  const params = new URLSearchParams(window.location.search);
+  const postId = params.get('id');
+  const postBody = document.getElementById('postBody');
+  const breadcrumbCategory = document.getElementById('breadcrumbCategory');
+
   (async () => {
-    const { data: posts, error } = await supabaseClient
+    if (!postId) {
+      postBody.innerHTML = '<p>Story not found. <a href="index.html">Back to home</a>.</p>';
+      return;
+    }
+
+    const { data: post, error } = await supabaseClient
       .from('posts')
       .select('*')
-      .eq('category', 'Business')
-      .order('created_at', { ascending: false });
+      .eq('id', postId)
+      .single();
 
-    if (error || !posts || posts.length === 0) return;
+    if (error || !post) {
+      postBody.innerHTML = '<p>Story not found. <a href="index.html">Back to home</a>.</p>';
+      return;
+    }
 
-    const container = document.getElementById('dynamicPosts');
-    let html = '<div class="story-list">';
-    posts.forEach((post, i) => {
-      const num = String(i + 1).padStart(2, '0');
-      const when = new Date(post.created_at).toLocaleDateString();
-      const imageHtml = post.image_url ? `<img class="story-row-image" src="${post.image_url}" alt="">` : '';
-      html += `
-      <div class="story-row">
-        <span class="story-num mono">${num}</span>
-        <div class="story-row-main">
-          ${imageHtml}
-          <h2><a href="post-view.html?id=${post.id}" style="color:inherit;">${post.title}</a></h2>
-          <p>${post.excerpt}</p>
-          <time>${when}</time>
-        </div>
-      </div>`;
-    });
-    html += '</div>';
-    container.innerHTML = html;
+    document.title = post.title + ' — Gistarena247';
+    breadcrumbCategory.textContent = post.category;
+
+    const when = new Date(post.created_at).toLocaleDateString();
+    const imageHtml = post.image_url ? `<img src="${post.image_url}" alt="">` : '';
+
+    postBody.innerHTML = `
+      <span class="eyebrow mono">${post.category.toUpperCase()}</span>
+      <h1>${post.title}</h1>
+      ${imageHtml}
+      <p class="postview-lede">${post.excerpt}</p>
+      <div class="postview-meta">
+        <span>${when}</span>
+      </div>
+    `;
   })();
 </script>
 </body>
