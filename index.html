@@ -258,21 +258,60 @@
 
     if (error || !posts || posts.length === 0) return;
 
-    // Lead story = most recent post overall
-    const lead = posts[0];
+    // Lead story slideshow = up to 4 most recent posts
+    const slideCount = Math.min(4, posts.length);
+    const slides = posts.slice(0, slideCount);
     const heroLead = document.getElementById('heroLead');
-    const leadWhen = new Date(lead.created_at).toLocaleDateString();
-    heroLead.innerHTML = `
-      <span class="eyebrow mono">${lead.category.toUpperCase()}</span>
-      <h1><a href="post-view.html?id=${lead.id}" style="color:inherit;">${lead.title}</a></h1>
-      <p>${lead.excerpt}</p>
-      <div class="hero-meta">
-        <span>${leadWhen}</span>
-      </div>
-    `;
 
-    // Trending = next 5 most recent (excluding the lead)
-    const trending = posts.slice(1, 6);
+    let slidesHtml = '';
+    slides.forEach((post, i) => {
+      const when = new Date(post.created_at).toLocaleDateString();
+      slidesHtml += `
+      <div class="hero-slide${i === 0 ? ' active' : ''}" data-slide="${i}">
+        <span class="eyebrow mono">${post.category.toUpperCase()}</span>
+        <h1><a href="post-view.html?id=${post.id}" style="color:inherit;">${post.title}</a></h1>
+        <p>${post.excerpt}</p>
+        <div class="hero-meta">
+          <span>${when}</span>
+        </div>
+      </div>`;
+    });
+
+    let dotsHtml = '';
+    if (slideCount > 1) {
+      dotsHtml = '<div class="hero-dots">';
+      slides.forEach((post, i) => {
+        dotsHtml += `<button class="hero-dot${i === 0 ? ' active' : ''}" data-dot="${i}" aria-label="Show story ${i + 1}"></button>`;
+      });
+      dotsHtml += '</div>';
+    }
+
+    heroLead.innerHTML = slidesHtml + dotsHtml;
+
+    if (slideCount > 1) {
+      let current = 0;
+      const slideEls = heroLead.querySelectorAll('.hero-slide');
+      const dotEls = heroLead.querySelectorAll('.hero-dot');
+
+      function showSlide(index) {
+        slideEls.forEach(el => el.classList.remove('active'));
+        dotEls.forEach(el => el.classList.remove('active'));
+        slideEls[index].classList.add('active');
+        dotEls[index].classList.add('active');
+        current = index;
+      }
+
+      dotEls.forEach((dot, i) => {
+        dot.addEventListener('click', () => showSlide(i));
+      });
+
+      setInterval(() => {
+        showSlide((current + 1) % slideCount);
+      }, 6000);
+    }
+
+    // Trending = next 5 most recent (excluding the slideshow posts)
+    const trending = posts.slice(slideCount, slideCount + 5);
     if (trending.length > 0) {
       const trendingList = document.getElementById('trendingList');
       let trendHtml = '';

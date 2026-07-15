@@ -157,11 +157,33 @@
           <h3>${post.title}</h3>
           <time>${when}</time>
         </div>
-        <button class="mypost-edit-btn" onclick="window.location.href='edit-post.html?id=${post.id}'">Edit</button>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button class="mypost-edit-btn" onclick="window.location.href='edit-post.html?id=${post.id}'">Edit</button>
+          <button class="mypost-edit-btn" style="color:#c0392b; border-color:#c0392b;" onclick="deletePost(${post.id})">Delete</button>
+        </div>
       </div>`;
     });
     myPostsList.innerHTML = html;
   })();
+
+  async function deletePost(id) {
+    const confirmed = window.confirm("Delete this post? This can't be undone.");
+    if (!confirmed) return;
+
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    const { error } = await supabaseClient
+      .from('posts')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', user.id);
+
+    if (error) {
+      alert("Couldn't delete: " + error.message);
+      return;
+    }
+
+    window.location.reload();
+  }
 </script>
 </body>
 </html>

@@ -594,3 +594,13 @@
   display:flex; gap:16px; flex-wrap:wrap;
   padding-bottom:22px; margin-bottom:26px; border-bottom:1px solid var(--line);
 }
+
+/* ---------- HERO SLIDESHOW ---------- */
+.hero-slide{display:none;}
+.hero-slide.active{display:block;}
+.hero-dots{display:flex; gap:8px; margin-top:20px;}
+.hero-dot{
+  width:9px; height:9px; border-radius:50%; border:1.5px solid var(--ink);
+  background:transparent; cursor:pointer; padding:0;
+}
+.hero-dot.active{background:var(--ink);}
