@@ -78,40 +78,6 @@
     <p>Markets, money, and the companies shaping the Nigerian economy.</p>
   </div>
   <div id="dynamicPosts"></div>
-  <div class="story-list">
-      <div class="story-row">
-        <span class="story-num mono">01</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Naira Steadies as CBN Issues New Guidance</a></h2>
-          <p>The currency held firm in the parallel market following the latest central bank policy update.</p>
-          <time>2h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">02</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">SME Lending Scheme Opens Applications</a></h2>
-          <p>Small business owners can now apply for the new low-interest loan program launching this quarter.</p>
-          <time>4h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">03</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Telecom Firm Cuts Data Prices in New Bundles</a></h2>
-          <p>The revised pricing plan aims to make data more affordable for everyday users.</p>
-          <time>7h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">04</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Fintech Startup Raises New Funding Round</a></h2>
-          <p>The Lagos-based company plans to use the capital to expand into two new markets.</p>
-          <time>10h ago</time>
-        </div>
-      </div>
-  </div>
 </main>
 <footer>
   <div class="footer-grid">
@@ -152,7 +118,10 @@
       .eq('category', 'Business')
       .order('created_at', { ascending: false });
 
-    if (error || !posts || posts.length === 0) return;
+    if (error || !posts || posts.length === 0) {
+      document.getElementById('dynamicPosts').innerHTML = '<div class="empty-state">No Business stories yet. <a href="post-news.html">Post the first one</a>.</div>';
+      return;
+    }
 
     const container = document.getElementById('dynamicPosts');
     let html = '<div class="story-list">';

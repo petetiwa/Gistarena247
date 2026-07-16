@@ -78,40 +78,6 @@
     <p>Match reports, transfers, and everything happening in Nigerian sport.</p>
   </div>
   <div id="dynamicPosts"></div>
-  <div class="story-list">
-      <div class="story-row">
-        <span class="story-num mono">01</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Local League Title Race Tightens in Final Weeks</a></h2>
-          <p>Just two points now separate the top three clubs heading into the final stretch of the season.</p>
-          <time>1h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">02</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Young Athlete Signs First Professional Contract</a></h2>
-          <p>The 19-year-old joins the senior squad after an impressive breakout youth season.</p>
-          <time>4h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">03</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">National Team Camp Opens Ahead of Qualifiers</a></h2>
-          <p>Players reported to camp this week as preparations begin for the upcoming qualifying fixtures.</p>
-          <time>9h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">04</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Super Eagles Name Squad for Upcoming Qualifiers</a></h2>
-          <p>The provisional squad list includes three uncapped players called up for the first time.</p>
-          <time>3h ago</time>
-        </div>
-      </div>
-  </div>
 </main>
 <footer>
   <div class="footer-grid">
@@ -152,7 +118,10 @@
       .eq('category', 'Sports')
       .order('created_at', { ascending: false });
 
-    if (error || !posts || posts.length === 0) return;
+    if (error || !posts || posts.length === 0) {
+      document.getElementById('dynamicPosts').innerHTML = '<div class="empty-state">No Sports stories yet. <a href="post-news.html">Post the first one</a>.</div>';
+      return;
+    }
 
     const container = document.getElementById('dynamicPosts');
     let html = '<div class="story-list">';

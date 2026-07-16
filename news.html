@@ -78,40 +78,6 @@
     <p>The latest on government, infrastructure, and everyday life across Nigeria.</p>
   </div>
   <div id="dynamicPosts"></div>
-  <div class="story-list">
-      <div class="story-row">
-        <span class="story-num mono">01</span>
-        <div class="story-row-main">
-          <h2><a href="article.html" style="color:inherit;">State Rolls Out New Blue Line Rail Schedule for Commuters</a></h2>
-          <p>Officials say the expanded timetable adds more coaches and earlier departures ahead of the festive season rush.</p>
-          <time>4h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">02</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Governors Meet Over Flood Preparedness Plans</a></h2>
-          <p>State leaders convened to review readiness ahead of the coming rainy season, focusing on drainage and early-warning systems.</p>
-          <time>2h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">03</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">New Market Regulations to Take Effect Next Month</a></h2>
-          <p>Traders in major markets will need to comply with updated stall registration and pricing transparency rules.</p>
-          <time>5h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">04</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Power Supply Improves in Three Northern States</a></h2>
-          <p>Grid upgrades have reduced outage frequency, according to the latest distribution company report.</p>
-          <time>8h ago</time>
-        </div>
-      </div>
-  </div>
 </main>
 <footer>
   <div class="footer-grid">
@@ -152,7 +118,10 @@
       .eq('category', 'News')
       .order('created_at', { ascending: false });
 
-    if (error || !posts || posts.length === 0) return;
+    if (error || !posts || posts.length === 0) {
+      document.getElementById('dynamicPosts').innerHTML = '<div class="empty-state">No News stories yet. <a href="post-news.html">Post the first one</a>.</div>';
+      return;
+    }
 
     const container = document.getElementById('dynamicPosts');
     let html = '<div class="story-list">';

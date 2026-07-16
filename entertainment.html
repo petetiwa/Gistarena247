@@ -78,40 +78,6 @@
     <p>Music, movies, and the moments everyone's talking about.</p>
   </div>
   <div id="dynamicPosts"></div>
-  <div class="story-list">
-      <div class="story-row">
-        <span class="story-num mono">01</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Nollywood Premiere Draws Big Weekend Crowd</a></h2>
-          <p>The latest release opened to a packed cinema hall, with fans lining up hours before showtime.</p>
-          <time>1h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">02</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Singer Announces Surprise Nationwide Tour</a></h2>
-          <p>Dates across Lagos, Abuja, and Port Harcourt were revealed with tickets going live this week.</p>
-          <time>3h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">03</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Reality Show Finale Sparks Online Debate</a></h2>
-          <p>Fans took to social media to react to the season's controversial final result.</p>
-          <time>6h ago</time>
-        </div>
-      </div>
-      <div class="story-row">
-        <span class="story-num mono">04</span>
-        <div class="story-row-main">
-          <h2><a href="#" style="color:inherit;">Comedian's New Skit Has Naija Twitter in Stitches</a></h2>
-          <p>The short clip racked up shares within hours of posting, becoming the week's biggest trend.</p>
-          <time>9h ago</time>
-        </div>
-      </div>
-  </div>
 </main>
 <footer>
   <div class="footer-grid">
@@ -152,7 +118,10 @@
       .eq('category', 'Entertainment')
       .order('created_at', { ascending: false });
 
-    if (error || !posts || posts.length === 0) return;
+    if (error || !posts || posts.length === 0) {
+      document.getElementById('dynamicPosts').innerHTML = '<div class="empty-state">No Entertainment stories yet. <a href="post-news.html">Post the first one</a>.</div>';
+      return;
+    }
 
     const container = document.getElementById('dynamicPosts');
     let html = '<div class="story-list">';

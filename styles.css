@@ -604,3 +604,9 @@
   background:transparent; cursor:pointer; padding:0;
 }
 .hero-dot.active{background:var(--ink);}
+
+/* ---------- HERO SLIDE IMAGE ---------- */
+.hero-slide-image{
+  width:100%; max-height:320px; object-fit:cover;
+  margin-bottom:18px; border:1px solid var(--line);
+}
