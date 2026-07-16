@@ -314,8 +314,8 @@
 
     // Trending = next 5 most recent (excluding the slideshow posts)
     const trending = posts.slice(slideCount, slideCount + 5);
+    const trendingList = document.getElementById('trendingList');
     if (trending.length > 0) {
-      const trendingList = document.getElementById('trendingList');
       let trendHtml = '';
       trending.forEach((post, i) => {
         const num = String(i + 1).padStart(2, '0');
@@ -326,24 +326,29 @@
         </div>`;
       });
       trendingList.innerHTML = trendHtml;
+    } else {
+      trendingList.innerHTML = '<p style="color:rgba(250,247,242,0.7); font-size:14px;">Nothing else trending yet.</p>';
     }
 
     // Top Stories grid = latest 3 per category
     const categories = ['News', 'Entertainment', 'Business', 'Sports'];
     categories.forEach((cat) => {
       const catPosts = posts.filter(p => p.category === cat).slice(0, 3);
-      if (catPosts.length === 0) return;
       const col = document.getElementById('catcol-' + cat.toLowerCase());
       if (!col) return;
       let html = `<span class="cat-label mono">${cat.toUpperCase()}</span>`;
-      catPosts.forEach((post) => {
-        const when = new Date(post.created_at).toLocaleDateString();
-        html += `
-        <article>
-          <h3><a href="post-view.html?id=${post.id}">${post.title}</a></h3>
-          <time>${when}</time>
-        </article>`;
-      });
+      if (catPosts.length === 0) {
+        html += `<p style="font-size:14px; color:var(--slate); padding:12px 0;">No ${cat} stories yet.</p>`;
+      } else {
+        catPosts.forEach((post) => {
+          const when = new Date(post.created_at).toLocaleDateString();
+          html += `
+          <article>
+            <h3><a href="post-view.html?id=${post.id}">${post.title}</a></h3>
+            <time>${when}</time>
+          </article>`;
+        });
+      }
       col.innerHTML = html;
     });
   })();
