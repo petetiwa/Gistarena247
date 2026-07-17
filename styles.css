@@ -620,5 +620,79 @@
 .postview-meta{
   font-family:'IBM Plex Mono', monospace; font-size:12px; color:#6b6862;
   padding-bottom:20px; border-bottom:1px solid var(--line);
+}/* ---------- GAMIFICATION TEASER (replaces old Trending box) ---------- */
+.gamify-teaser{
+  padding:32px 24px;
+  background:var(--ink);
+  color:var(--paper);
+  display:flex;
+  flex-direction:column;
 }
+.gamify-badge{
+  display:inline-block;
+  color:var(--gold);
+  font-size:11px;
+  letter-spacing:0.08em;
+  margin-bottom:10px;
+}
+.gamify-teaser h2{
+  color:var(--paper);
+  font-size:20px;
+  margin-bottom:18px;
+  letter-spacing:0.02em;
+}
+.gamify-list{display:flex; flex-direction:column; gap:16px; margin-bottom:24px;}
+.gamify-item{display:flex; gap:12px; align-items:flex-start;}
+.gamify-icon{font-size:20px; line-height:1.2;}
+.gamify-item strong{
+  display:block;
+  font-family:'Archivo Black', sans-serif;
+  font-size:14px;
+  text-transform:uppercase;
+  margin-bottom:4px;
+  color:var(--paper);
+}
+.gamify-item p{
+  font-size:13px;
+  color:rgba(250,247,242,0.75);
+  line-height:1.4;
+}
+.gamify-cta{
+  display:block;
+  text-align:center;
+  background:var(--gold);
+  color:var(--ink);
+  font-family:'Archivo Black', sans-serif;
+  font-size:14px;
+  text-transform:uppercase;
+  padding:16px 20px;
+  letter-spacing:0.02em;
+  transition:opacity .15s ease;
+}
+.gamify-cta:hover{opacity:0.85;}
+
+/* ---------- TICKER: gamified tag color ---------- */
+.tag-game{color:var(--palm); font-weight:600;}
+
+/* ---------- FUEL POINTS TOAST ---------- */
+.fuel-toast{
+  position:fixed;
+  left:50%;
+  bottom:-100px;
+  transform:translateX(-50%);
+  background:var(--palm);
+  color:var(--paper);
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  padding:14px 20px;
+  border-radius:6px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.25);
+  max-width:min(90vw, 380px);
+  text-align:center;
+  z-index:500;
+  transition:bottom .4s ease;
+}
+.fuel-toast.show{bottom:24px;}
+
+
 
