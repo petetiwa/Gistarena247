@@ -693,6 +693,17 @@
   transition:bottom .4s ease;
 }
 .fuel-toast.show{bottom:24px;}
+/* ---------- TICKER FIXES: consistent speed + consistent font size ---------- */
+.ticker-track{
+  animation-duration: 54s;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+.ticker-item{
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 
 
 
