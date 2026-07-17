@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Job — Gistarena247</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+<div class="header-inner">
+<a href="index.html" class="logo">GIST<span>ARENA</span>247</a>
+<div class="header-actions">
+<a href="login.html" class="btn-ghost">Login</a>
+<a href="register.html" class="btn-solid">Register</a>
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+<span></span><span></span><span></span>
+</button>
+</div>
+</div>
+<div class="ticker-bar" aria-label="Latest updates">
+<div class="ticker-track">
+<span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
+<span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
+<span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
+<span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
+<span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
+<span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
+</div>
+</div>
+</header>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<nav class="drawer" id="drawer" aria-label="Main menu">
+<div class="drawer-head">
+<span class="logo" style="font-size:18px;">MENU</span>
+<button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+</div>
+<div class="drawer-nav">
+<span class="divider-label">READ</span>
+<a href="index.html">Home</a>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+<span class="divider-label">CONTRIBUTE</span>
+<a href="post-news.html">Post News</a>
+<a href="my-posts.html">My Posts</a>
+<span class="divider-label">WORK</span>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="my-jobs.html">My Jobs</a>
+<a href="register.html?role=worker">Become a Worker</a>
+<span class="divider-label">ACCOUNT</span>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
+</nav>
+
+<main id="main">
+<div class="post-wrap">
+
+<div id="loggedOutNotice" class="post-notice" style="display:none;">
+<p style="margin-bottom:14px;">You need to be logged in to edit jobs.</p>
+<a href="login.html">Log in</a> or <a href="register.html">create an account</a>
+</div>
+
+<div id="notFoundNotice" class="post-notice" style="display:none;">
+<p>This job couldn't be found, or doesn't belong to you.</p>
+<a href="my-jobs.html">Back to My Jobs</a>
+</div>
+
+<div id="editFormWrap" style="display:none;">
+<span class="eyebrow mono">EDIT</span>
+<h1>Edit Job</h1>
+
+<form id="editForm">
+<div class="field">
+<label for="edit-title">Job title</label>
+<input type="text" id="edit-title" required>
+</div>
+
+<div class="field">
+<label for="edit-description">Description</label>
+<input type="text" id="edit-description" required>
+</div>
+
+<div class="field">
+<label for="edit-category">Category</label>
+<select id="edit-category">
+<option value="Home Services">Home Services</option>
+<option value="Events">Events</option>
+<option value="Logistics">Logistics</option>
+</select>
+</div>
+
+<div class="field">
+<label for="edit-location">Location</label>
+<input type="text" id="edit-location" required>
+</div>
+
+<div class="field">
+<label for="edit-price">Price</label>
+<input type="text" id="edit-price" required>
+</div>
+
+<div class="field" id="currentImageField" style="display:none;">
+<label>Current photo</label>
+<img id="currentImagePreview" style="width:100%; max-height:220px; object-fit:cover; border:1px solid var(--line); margin-bottom:10px;">
+</div>
+
+<div class="field">
+<label for="edit-image">Replace photo (optional)</label>
+<input type="file" id="edit-image" accept="image/*">
+</div>
+
+<p id="editMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+
+<button type="submit" class="auth-submit" id="editSubmitBtn">Save Changes</button>
+</form>
+</div>
+
+</div>
+</main>
+
+<footer>
+<div class="footer-grid">
+<div class="footer-brand">
+<span class="logo">GIST<span style="color:var(--ember);">ARENA</span>247</span>
+<p>Local news and honest work, in one place. Built for Nigeria, updated every day.</p>
+</div>
+<div>
+<h4>READ</h4>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+</div>
+<div>
+<h4>WORK</h4>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="my-jobs.html">My Jobs</a>
+<a href="register.html?role=worker">Become a Worker</a>
+</div>
+<div>
+<h4>ACCOUNT</h4>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Gistarena247. All rights reserved.</span>
+<span>Lagos · Abuja · Port Harcourt</span>
+</div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+const loggedOutNotice = document.getElementById('loggedOutNotice');
+const notFoundNotice = document.getElementById('notFoundNotice');
+const editFormWrap = document.getElementById('editFormWrap');
+const editForm = document.getElementById('editForm');
+const editMessage = document.getElementById('editMessage');
+const editSubmitBtn = document.getElementById('editSubmitBtn');
+const currentImageField = document.getElementById('currentImageField');
+const currentImagePreview = document.getElementById('currentImagePreview');
+
+const params = new URLSearchParams(window.location.search);
+const jobId = params.get('id');
+
+let currentUser = null;
+let existingImageUrl = null;
+
+function showEditMessage(text, isError) {
+  editMessage.textContent = text;
+  editMessage.style.display = 'block';
+  editMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
+}
+
+(async () => {
+  const { data: { user } } = await supabaseClient.auth.getUser();
+
+  if (!user) {
+    loggedOutNotice.style.display = 'block';
+    return;
+  }
+
+  currentUser = user;
+
+  if (!jobId) {
+    notFoundNotice.style.display = 'block';
+    return;
+  }
+
+  const { data: job, error } = await supabaseClient
+    .from('jobs')
+    .select('*')
+    .eq('id', jobId)
+    .eq('user_id', user.id)
+    .single();
+
+  if (error || !job) {
+    notFoundNotice.style.display = 'block';
+    return;
+  }
+
+  document.getElementById('edit-title').value = job.title;
+  document.getElementById('edit-description').value = job.description;
+  document.getElementById('edit-category').value = job.category;
+  document.getElementById('edit-location').value = job.location;
+  document.getElementById('edit-price').value = job.price;
+  existingImageUrl = job.image_url;
+
+  if (job.image_url) {
+    currentImagePreview.src = job.image_url;
+    currentImageField.style.display = 'block';
+  }
+
+  editFormWrap.style.display = 'block';
+})();
+
+editForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById('edit-title').value.trim();
+  const description = document.getElementById('edit-description').value.trim();
+  const category = document.getElementById('edit-category').value;
+  const location = document.getElementById('edit-location').value.trim();
+  const price = document.getElementById('edit-price').value.trim();
+  const imageFile = document.getElementById('edit-image').files[0];
+
+  editSubmitBtn.disabled = true;
+  editSubmitBtn.textContent = 'Saving...';
+
+  let imageUrl = existingImageUrl;
+
+  if (imageFile) {
+    editSubmitBtn.textContent = 'Uploading photo...';
+    const fileExt = imageFile.name.split('.').pop();
+    const filePath = `${currentUser.id}/${Date.now()}.${fileExt}`;
+
+    const { error: uploadError } = await supabaseClient.storage
+      .from('job-images')
+      .upload(filePath, imageFile);
+
+    if (uploadError) {
+      editSubmitBtn.disabled = false;
+      editSubmitBtn.textContent = 'Save Changes';
+      showEditMessage(uploadError.message, true);
+      return;
+    }
+
+    const { data: publicUrlData } = supabaseClient.storage
+      .from('job-images')
+      .getPublicUrl(filePath);
+
+    imageUrl = publicUrlData.publicUrl;
+  }
+
+  editSubmitBtn.textContent = 'Saving...';
+
+  const { error } = await supabaseClient
+    .from('jobs')
+    .update({
+      title: title,
+      description: description,
+      category: category,
+      location: location,
+      price: price,
+      image_url: imageUrl
+    })
+    .eq('id', jobId)
+    .eq('user_id', currentUser.id);
+
+  editSubmitBtn.disabled = false;
+  editSubmitBtn.textContent = 'Save Changes';
+
+  if (error) {
+    showEditMessage(error.message, true);
+    return;
+  }
+
+  showEditMessage("Changes saved!", false);
+});
+</script>
+</body>
+</html>
