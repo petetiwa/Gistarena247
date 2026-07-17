@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post a Job — Gistarena247</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header>
+<div class="header-inner">
+<a href="index.html" class="logo">GIST<span>ARENA</span>247</a>
+<div class="header-actions">
+<a href="login.html" class="btn-ghost">Login</a>
+<a href="register.html" class="btn-solid">Register</a>
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+<span></span><span></span><span></span>
+</button>
+</div>
+</div>
+<div class="ticker-bar" aria-label="Latest updates">
+<div class="ticker-track">
+<span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
+<span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
+<span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
+<span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
+<span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
+<span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
+</div>
+</div>
+</header>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<nav class="drawer" id="drawer" aria-label="Main menu">
+<div class="drawer-head">
+<span class="logo" style="font-size:18px;">MENU</span>
+<button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+</div>
+<div class="drawer-nav">
+<span class="divider-label">READ</span>
+<a href="index.html">Home</a>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+<span class="divider-label">CONTRIBUTE</span>
+<a href="post-news.html">Post News</a>
+<a href="my-posts.html">My Posts</a>
+<span class="divider-label">WORK</span>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="register.html?role=worker">Become a Worker</a>
+<span class="divider-label">ACCOUNT</span>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
+</nav>
+
+<main id="main">
+<div class="post-wrap">
+
+<div id="loggedOutNotice" class="post-notice" style="display:none;">
+<p style="margin-bottom:14px;">You need to be logged in to post a job.</p>
+<a href="login.html">Log in</a> or <a href="register.html">create an account</a>
+</div>
+
+<div id="postFormWrap" style="display:none;">
+<span class="eyebrow mono">WORK</span>
+<h1>Post a Job</h1>
+<p class="auth-sub">Your listing will appear on the Marketplace right away.</p>
+
+<form id="jobForm">
+<div class="field">
+<label for="job-title">Job title</label>
+<input type="text" id="job-title" placeholder="e.g. Generator technician needed" required>
+</div>
+
+<div class="field">
+<label for="job-description">Description</label>
+<input type="text" id="job-description" placeholder="What does the job involve?" required>
+</div>
+
+<div class="field">
+<label for="job-category">Category</label>
+<select id="job-category">
+<option value="Home Services">Home Services</option>
+<option value="Events">Events</option>
+<option value="Logistics">Logistics</option>
+</select>
+</div>
+
+<div class="field">
+<label for="job-location">Location</label>
+<input type="text" id="job-location" placeholder="e.g. Lekki, Lagos" required>
+</div>
+
+<div class="field">
+<label for="job-price">Price</label>
+<input type="text" id="job-price" placeholder="e.g. ₦25,000/day" required>
+</div>
+
+<div class="field">
+<label for="job-image">Photo (optional)</label>
+<input type="file" id="job-image" accept="image/*">
+</div>
+
+<p id="jobMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+
+<button type="submit" class="auth-submit" id="jobSubmitBtn">Post Job</button>
+</form>
+</div>
+
+</div>
+</main>
+
+<footer>
+<div class="footer-grid">
+<div class="footer-brand">
+<span class="logo">GIST<span style="color:var(--ember);">ARENA</span>247</span>
+<p>Local news and honest work, in one place. Built for Nigeria, updated every day.</p>
+</div>
+<div>
+<h4>READ</h4>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+</div>
+<div>
+<h4>WORK</h4>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="register.html?role=worker">Become a Worker</a>
+</div>
+<div>
+<h4>ACCOUNT</h4>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Gistarena247. All rights reserved.</span>
+<span>Lagos · Abuja · Port Harcourt</span>
+</div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+const loggedOutNotice = document.getElementById('loggedOutNotice');
+const postFormWrap = document.getElementById('postFormWrap');
+const jobForm = document.getElementById('jobForm');
+const jobMessage = document.getElementById('jobMessage');
+const jobSubmitBtn = document.getElementById('jobSubmitBtn');
+
+let currentUser = null;
+
+(async () => {
+  const { data: { user } } = await supabaseClient.auth.getUser();
+  currentUser = user;
+  if (user) {
+    postFormWrap.style.display = 'block';
+  } else {
+    loggedOutNotice.style.display = 'block';
+  }
+})();
+
+function showJobMessage(text, isError) {
+  jobMessage.textContent = text;
+  jobMessage.style.display = 'block';
+  jobMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
+}
+
+jobForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById('job-title').value.trim();
+  const description = document.getElementById('job-description').value.trim();
+  const category = document.getElementById('job-category').value;
+  const location = document.getElementById('job-location').value.trim();
+  const price = document.getElementById('job-price').value.trim();
+  const imageFile = document.getElementById('job-image').files[0];
+
+  jobSubmitBtn.disabled = true;
+  jobSubmitBtn.textContent = 'Posting...';
+
+  let imageUrl = null;
+
+  if (imageFile) {
+    jobSubmitBtn.textContent = 'Uploading photo...';
+    const fileExt = imageFile.name.split('.').pop();
+    const filePath = `${currentUser.id}/${Date.now()}.${fileExt}`;
+
+    const { error: uploadError } = await supabaseClient.storage
+      .from('job-images')
+      .upload(filePath, imageFile);
+
+    if (uploadError) {
+      jobSubmitBtn.disabled = false;
+      jobSubmitBtn.textContent = 'Post Job';
+      showJobMessage(uploadError.message, true);
+      return;
+    }
+
+    const { data: publicUrlData } = supabaseClient.storage
+      .from('job-images')
+      .getPublicUrl(filePath);
+
+    imageUrl = publicUrlData.publicUrl;
+  }
+
+  jobSubmitBtn.textContent = 'Saving job...';
+
+  const { error } = await supabaseClient.from('jobs').insert([
+    {
+      title: title,
+      description: description,
+      category: category,
+      location: location,
+      price: price,
+      image_url: imageUrl,
+      user_id: currentUser.id
+    }
+  ]);
+
+  jobSubmitBtn.disabled = false;
+  jobSubmitBtn.textContent = 'Post Job';
+
+  if (error) {
+    showJobMessage(error.message, true);
+    return;
+  }
+
+  showJobMessage("Job posted! Check the Marketplace page.", false);
+  jobForm.reset();
+});
+</script>
+</body>
+</html>
