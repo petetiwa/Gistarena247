@@ -25,49 +25,55 @@
 
 <script src="script.js"></script>
 <script>
+  // ---------- Pure data: one object per game, no markup mixed in ----------
   const games = {
     streak: {
       icon: '🔥',
       title: 'Daily Streak',
+      tagline: 'Build your streak, grow your multiplier',
       steps: [
         'Log into GistArena247 every single day to automatically build up your activity streak tracking calendar.',
         'Staying consistent unlocks multiplier tiers that grow your daily wallet earnings from ₦10.00 all the way up to ₦20.00 cash per day.',
         'If you miss a single calendar day, your streak multiplier resets to zero, so check back daily to protect your balance!'
       ],
-      cta: 'Start My Streak'
+      cta: 'Play Daily Streak'
     },
     trivia: {
       icon: '🧠',
       title: 'Live Trivia',
+      tagline: 'Answer fast, answer right',
       steps: [
         'Join the live countdown before 8:00 PM daily. Entry costs just ₦15.00 deducted from your earned in-app balance.',
         'Answer 10 rapid-fire questions based strictly on the hyperlocal news articles and traffic updates published across GistArena247 earlier today.',
         "Every player who achieves a perfect 10/10 scorecard instantly splits that night's Guaranteed Daily Match Jackpot directly into their app wallet!"
       ],
-      cta: "Join Tonight's Trivia"
+      cta: 'Play Live Trivia'
     },
     auction: {
       icon: '🔨',
       title: 'Reverse Auctions',
+      tagline: 'Lowest unique bid wins',
       steps: [
         'Browse premium marketplace items and lock in a strategic price bid using just ₦10.00 of your accumulated app credit.',
         'To win the item, your bid must be the single lowest numerical number that absolutely zero other players on the platform duplicated.',
         'Duplicated numbers are completely eliminated from the board, allowing you to walk away with high-end tools or electronics for pennies!'
       ],
-      cta: 'Browse Live Auctions'
+      cta: 'Play Reverse Auctions'
     }
   };
 
+  // ---------- Pure template function: data in, HTML string out ----------
   function renderRules(game) {
     const stepsHtml = game.steps.map((text, i) => `
-      <div class="rules-step">
+      <div class="rules-step-card">
         <span class="rules-step-num">${i + 1}</span>
         <p>${text}</p>
       </div>`).join('');
 
     return `
-      <span class="rules-icon">${game.icon}</span>
+      <div class="rules-icon-badge">${game.icon}</div>
       <h1>${game.title}</h1>
+      <p class="rules-tagline">${game.tagline}</p>
       <div class="rules-steps">${stepsHtml}</div>
       <a href="#" class="rules-cta">${game.cta}</a>`;
   }
