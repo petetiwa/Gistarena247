@@ -795,6 +795,19 @@
 .rules-cta{
   border-radius:10px;
 }
+  /* ---------- REGISTER: payout name warning ---------- */
+.payout-warning{
+  background:#fdecea;
+  border:1.5px solid #c0392b;
+  color:#8a2c1f;
+  font-size:13px;
+  line-height:1.5;
+  padding:14px 16px;
+  border-radius:8px;
+  margin-bottom:24px;
+}
+.payout-warning strong{color:#c0392b;}
+
 
 
 
