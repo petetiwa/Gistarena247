@@ -752,6 +752,50 @@
 .rules-icon{font-size:40px; margin-bottom:16px;}
 .rules-wrap h1{
   color:var(--paper);
+  /* ---------- GAME RULES: polish pass ---------- */
+.rules-icon-badge{
+  width:56px;
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  background:rgba(250,247,242,0.08);
+  border-radius:14px;
+  margin-bottom:18px;
+}
+.rules-tagline{
+  color:rgba(250,247,242,0.6);
+  font-size:14px;
+  margin-top:-16px;
+  margin-bottom:28px;
+}
+.rules-step-card{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  background:rgba(250,247,242,0.04);
+  border:1px solid rgba(250,247,242,0.1);
+  border-radius:12px;
+  padding:18px;
+}
+.rules-step-num{
+  font-family:'Archivo Black', sans-serif;
+  background:var(--gold);
+  color:var(--ink);
+  font-size:14px;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.rules-cta{
+  border-radius:10px;
+}
+
 
 
 
