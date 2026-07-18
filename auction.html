@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverse Auction — Gistarena247</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+</head>
+<body>
+
+<div class="rules-page">
+<div class="rules-topbar">
+<a href="index.html" class="rules-back">⬅ Back to Gist</a>
+<span class="balance-badge" id="balanceBadge">💼 Balance: ₦0.00</span>
+</div>
+
+<div class="rules-wrap">
+
+<div id="loggedOutNotice" class="post-notice" style="display:none;">
+<p style="margin-bottom:14px;">You need to be logged in to bid.</p>
+<a href="login.html">Log in</a> or <a href="register.html">create an account</a>
+</div>
+
+<div id="auctionBody" style="display:none;">
+<div class="rules-icon-badge">🔨</div>
+<h1>Reverse Auction</h1>
+<p class="rules-tagline">Lowest unique bid wins the item</p>
+
+<div class="rules-step-card" style="margin-bottom:24px;">
+<div>
+  <strong style="display:block; font-family:'Archivo Black', sans-serif; text-transform:uppercase; font-size:14px; margin-bottom:6px;">Tonight's Item: Power Bank (20,000mAh)</strong>
+  <p style="font-size:14px; color:rgba(250,247,242,0.75);">Bid closes at midnight. One bid per person. Duplicate numbers are eliminated — the lowest number nobody else picked wins.</p>
+</div>
+</div>
+
+<form id="bidForm">
+<div class="field">
+<label for="bid-amount">Your bid (₦)</label>
+<input type="number" id="bid-amount" min="1" step="1" placeholder="e.g. 47" required>
+</div>
+
+<p id="bidMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+
+<button type="submit" class="rules-cta" id="bidSubmitBtn" style="width:100%; border:none;">Submit Bid</button>
+</form>
+</div>
+
+</div>
+</div>
+
+<script>
+  // Fixed demo auction ID — in production, each live item gets its own real UUID.
+  const AUCTION_ID = '11111111-1111-1111-1111-111111111111';
+
+  let currentUser = null;
+
+  const bidForm = document.getElementById('bidForm');
+  const bidMessage = document.getElementById('bidMessage');
+  const bidSubmitBtn = document.getElementById('bidSubmitBtn');
+
+  function showBidMessage(text, isError) {
+    bidMessage.textContent = text;
+    bidMessage.style.display = 'block';
+    bidMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
+  }
+
+  bidForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const amount = Number(document.getElementById('bid-amount').value);
+    if (!amount || amount <= 0) {
+      showBidMessage('Enter a valid bid amount.', true);
+      return;
+    }
+
+    bidSubmitBtn.disabled = true;
+    bidSubmitBtn.textContent = 'Submitting...';
+
+    const { error } = await supabaseClient
+      .from('auction_bids')
+      .insert([{
+        auction_id: AUCTION_ID,
+        user_id: currentUser.id,
+        bid_amount: amount
+      }]);
+
+    bidSubmitBtn.disabled = false;
+    bidSubmitBtn.textContent = 'Submit Bid';
+
+    if (error) {
+      showBidMessage(error.message, true);
+      return;
+    }
+
+    showBidMessage('Bid submitted! Winner is announced when the auction closes.', false);
+    bidForm.reset();
+  });
+
+  (async () => {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+      document.getElementById('loggedOutNotice').style.display = 'block';
+      return;
+    }
+
+    currentUser = user;
+    document.getElementById('auctionBody').style.display = 'block';
+  })();
+</script>
+</body>
+</html>

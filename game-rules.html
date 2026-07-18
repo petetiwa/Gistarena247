@@ -6,8 +6,7 @@
 <title>Game Rules — Gistarena247</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=3">
-
+<link rel="stylesheet" href="styles.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 </head>
@@ -64,19 +63,25 @@
   };
 
   // ---------- Pure template function: data in, HTML string out ----------
-  function renderRules(game) {
+  function renderRules(game, gameKey) {
     const stepsHtml = game.steps.map((text, i) => `
       <div class="rules-step-card">
         <span class="rules-step-num">${i + 1}</span>
         <p>${text}</p>
       </div>`).join('');
 
+    const ctaLinks = {
+      streak: 'index.html',
+      trivia: 'trivia.html',
+      auction: 'auction.html'
+    };
+
     return `
       <div class="rules-icon-badge">${game.icon}</div>
       <h1>${game.title}</h1>
       <p class="rules-tagline">${game.tagline}</p>
       <div class="rules-steps">${stepsHtml}</div>
-      <a href="#" class="rules-cta">${game.cta}</a>`;
+      <a href="${ctaLinks[gameKey] || 'index.html'}" class="rules-cta">${game.cta}</a>`;
   }
 
   function renderNotFound() {
@@ -90,7 +95,7 @@
   const gameKey = params.get('game');
   const game = games[gameKey];
 
-  document.getElementById('rulesWrap').innerHTML = game ? renderRules(game) : renderNotFound();
+  document.getElementById('rulesWrap').innerHTML = game ? renderRules(game, gameKey) : renderNotFound();
   if (game) document.title = game.title + ' Rules — Gistarena247';
 </script>
 </body>

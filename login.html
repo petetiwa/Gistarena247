@@ -11,91 +11,129 @@
 <script src="supabase-config.js"></script>
 </head>
 <body>
-
 <a href="#main" class="skip-link">Skip to content</a>
 
 <header>
-  <div class="header-inner">
-    <a href="index.html" class="logo">GIST<span>ARENA</span>247</a>
-    <div class="header-actions">
-      <a href="login.html" class="btn-ghost">Login</a>
-      <a href="register.html" class="btn-solid">Register</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-  <div class="ticker-bar" aria-label="Latest updates">
-    <div class="ticker-track">
-      <span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
-      <span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
-      <span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
-      <!-- duplicate for seamless loop -->
-      <span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
-      <span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
-      <span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
-    </div>
-  </div>
+<div class="header-inner">
+<a href="index.html" class="logo">GIST<span>ARENA</span>247</a>
+<div class="header-actions">
+<a href="login.html" class="btn-ghost">Login</a>
+<a href="register.html" class="btn-solid">Register</a>
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+<span></span><span></span><span></span>
+</button>
+</div>
+</div>
+<div class="ticker-bar" aria-label="Latest updates">
+<div class="ticker-track">
+<span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
+</div>
+</div>
 </header>
 
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <nav class="drawer" id="drawer" aria-label="Main menu">
-  <div class="drawer-head">
-    <span class="logo" style="font-size:18px;">MENU</span>
-    <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
-  </div>
-  <div class="drawer-nav">
-    <span class="divider-label">READ</span>
-    <a href="index.html">Home</a>
-    <a href="news.html">News</a>
-    <a href="entertainment.html">Entertainment</a>
-    <a href="business.html">Business</a>
-    <a href="sports.html">Sports</a>
-    <span class="divider-label">CONTRIBUTE</span>
-    <a href="post-news.html">Post News</a>
-    <a href="my-posts.html">My Posts</a>
-    <span class="divider-label">WORK</span>
-    <a href="jobs.html">Marketplace</a>
-     <a href="post-job.html">Post a Job</a>
-    <a href="jobs.html">Find Workers</a>
-    <a href="register.html?role=worker">Become a Worker</a>
-    <span class="divider-label">ACCOUNT</span>
-    <a href="login.html">Login</a>
-    <a href="register.html">Register</a>
-  </div>
+<div class="drawer-head">
+<span class="logo" style="font-size:18px;">MENU</span>
+<button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+</div>
+<div class="drawer-nav">
+<span class="divider-label">READ</span>
+<a href="index.html">Home</a>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+<span class="divider-label">CONTRIBUTE</span>
+<a href="post-news.html">Post News</a>
+<a href="my-posts.html">My Posts</a>
+<span class="divider-label">WORK</span>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="jobs.html">Find Workers</a>
+<a href="register.html?role=worker">Become a Worker</a>
+<span class="divider-label">ACCOUNT</span>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
 </nav>
+
 <main id="main">
-  <div class="auth-wrap">
-    <div class="auth-card">
-      <span class="eyebrow mono">WELCOME BACK</span>
-      <h1>Log In</h1>
-      <p class="auth-sub">Catch up on the news and check your gigs.</p>
+<div class="auth-wrap">
+<div class="auth-card">
+<span class="eyebrow mono">WELCOME BACK</span>
+<h1>Log In</h1>
+<p class="auth-sub">Catch up on the news and check your gigs.</p>
 
-      <form id="loginForm">
-        <div class="field">
-          <label for="login-email">Email or phone number</label>
-          <input type="text" id="login-email" placeholder="you@example.com" required>
-        </div>
-        <div class="field">
-          <label for="login-pass">Password</label>
-          <input type="password" id="login-pass" placeholder="••••••••" required>
-        </div>
-        <p id="loginMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
-        <button type="submit" class="auth-submit" id="loginSubmitBtn">Log In</button>
-      </form>
+<form id="loginForm">
+<div class="field">
+<label for="login-email">Email or phone number</label>
+<input type="text" id="login-email" placeholder="you@example.com" required>
+</div>
 
-      <p class="auth-foot">New here? <a href="register.html">Create an account</a></p>
-    </div>
-  </div>
+<div class="field">
+<label for="login-pass">Password</label>
+<input type="password" id="login-pass" placeholder="••••••••" required>
+</div>
+
+<p id="loginMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+
+<button type="submit" class="auth-submit" id="loginSubmitBtn">Log In</button>
+</form>
+
+<p class="auth-foot">New here? <a href="register.html">Create an account</a></p>
+</div>
+</div>
 </main>
 
 <script>
+  // ---------- Daily Streak: runs once, right after a successful login ----------
+  async function checkDailyStreak(userId) {
+    const { data: profile, error } = await supabaseClient
+      .from('profiles')
+      .select('last_login_date, streak_count, wallet_balance')
+      .eq('id', userId)
+      .single();
+
+    if (error || !profile) return;
+
+    const today = new Date().toISOString().slice(0, 10);
+    const lastLogin = profile.last_login_date;
+
+    if (lastLogin === today) {
+      // Already checked in today.
+      return;
+    }
+
+    let newStreak;
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().slice(0, 10);
+
+    if (lastLogin === yesterdayStr) {
+      newStreak = (profile.streak_count || 0) + 1;
+    } else {
+      newStreak = 1;
+    }
+
+    let tierAmount;
+    if (newStreak <= 4) tierAmount = 10;
+    else if (newStreak <= 6) tierAmount = 15;
+    else tierAmount = 20;
+
+    const newBalance = (profile.wallet_balance || 0) + tierAmount;
+
+    await supabaseClient
+      .from('profiles')
+      .update({
+        last_login_date: today,
+        streak_count: newStreak,
+        wallet_balance: newBalance
+      })
+      .eq('id', userId);
+  }
+
   const loginForm = document.getElementById('loginForm');
   const loginMessage = document.getElementById('loginMessage');
   const loginSubmitBtn = document.getElementById('loginSubmitBtn');
@@ -108,6 +146,7 @@
 
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-pass').value;
 
@@ -119,49 +158,54 @@
       password: password
     });
 
-    loginSubmitBtn.disabled = false;
-    loginSubmitBtn.textContent = 'Log In';
-
     if (error) {
+      loginSubmitBtn.disabled = false;
+      loginSubmitBtn.textContent = 'Log In';
       showLoginMessage(error.message, true);
       return;
     }
 
+    await checkDailyStreak(data.user.id);
+
+    loginSubmitBtn.disabled = false;
+    loginSubmitBtn.textContent = 'Log In';
     showLoginMessage("Logged in! Redirecting...", false);
     setTimeout(() => { window.location.href = "index.html"; }, 1000);
   });
 </script>
+
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <span class="logo">GIST<span style="color:var(--ember);">ARENA</span>247</span>
-      <p>Local news and honest work, in one place. Built for Nigeria, updated every day.</p>
-    </div>
-    <div>
-      <h4>READ</h4>
-      <a href="news.html">News</a>
-      <a href="entertainment.html">Entertainment</a>
-      <a href="business.html">Business</a>
-      <a href="sports.html">Sports</a>
-    </div>
-    <div>
-      <h4>WORK</h4>
-      <a href="jobs.html">Marketplace</a>
-       <a href="post-job.html">Post a Job</a>
-      <a href="jobs.html">Find Workers</a>
-      <a href="register.html?role=worker">Become a Worker</a>
-    </div>
-    <div>
-      <h4>ACCOUNT</h4>
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 Gistarena247. All rights reserved.</span>
-    <span>Lagos · Abuja · Port Harcourt</span>
-  </div>
+<div class="footer-grid">
+<div class="footer-brand">
+<span class="logo">GIST<span style="color:var(--ember);">ARENA</span>247</span>
+<p>Local news and honest work, in one place. Built for Nigeria, updated every day.</p>
+</div>
+<div>
+<h4>READ</h4>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+</div>
+<div>
+<h4>WORK</h4>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="jobs.html">Find Workers</a>
+<a href="register.html?role=worker">Become a Worker</a>
+</div>
+<div>
+<h4>ACCOUNT</h4>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Gistarena247. All rights reserved.</span>
+<span>Lagos · Abuja · Port Harcourt</span>
+</div>
 </footer>
+
 <script src="script.js"></script>
 </body>
 </html>

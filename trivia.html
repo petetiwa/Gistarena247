@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Trivia — Gistarena247</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+</head>
+<body>
+
+<div class="rules-page">
+<div class="rules-topbar">
+<a href="index.html" class="rules-back">⬅ Back to Gist</a>
+<span class="balance-badge" id="balanceBadge">💼 Balance: ₦0.00</span>
+</div>
+
+<div class="rules-wrap">
+
+<div id="loggedOutNotice" class="post-notice" style="display:none;">
+<p style="margin-bottom:14px;">You need to be logged in to play Live Trivia.</p>
+<a href="login.html">Log in</a> or <a href="register.html">create an account</a>
+</div>
+
+<div id="triviaBody" style="display:none;">
+<div class="rules-icon-badge">🧠</div>
+<h1>Live Trivia</h1>
+<p class="rules-tagline">Answer all 5 correctly to enter tonight's jackpot split</p>
+
+<div id="quizArea"></div>
+<div id="resultArea" style="display:none;"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+  // Placeholder question set — in production these would be generated daily
+  // from that day's actual published news/traffic stories.
+  const questions = [
+    { q: "What is the currency symbol used across Gistarena247 prices?", options: ["₦", "$", "€", "£"], answer: "₦" },
+    { q: "Which section lets you hire local workers?", options: ["News", "Marketplace", "Sports", "Login"], answer: "Marketplace" },
+    { q: "How many days in a row keeps your Daily Streak alive?", options: ["Every day", "Every 3 days", "Once a week", "Never expires"], answer: "Every day" },
+    { q: "In Reverse Auctions, which bid wins?", options: ["Highest bid", "First bid", "Lowest unique bid", "Random bid"], answer: "Lowest unique bid" },
+    { q: "What do you need to register on Gistarena247?", options: ["NIN", "BVN", "Just name, phone, password", "Passport"], answer: "Just name, phone, password" }
+  ];
+
+  let currentUser = null;
+  let currentIndex = 0;
+  let correctCount = 0;
+
+  const quizArea = document.getElementById('quizArea');
+  const resultArea = document.getElementById('resultArea');
+
+  function renderQuestion() {
+    const item = questions[currentIndex];
+    const optionsHtml = item.options.map(opt =>
+      `<button type="button" class="btn-ghost quiz-option" style="width:100%; margin-bottom:10px; text-align:left;" data-value="${opt}">${opt}</button>`
+    ).join('');
+
+    quizArea.innerHTML = `
+      <p style="font-size:15px; margin-bottom:16px;">Question ${currentIndex + 1} of ${questions.length}</p>
+      <p style="font-size:17px; margin-bottom:20px; font-weight:600;">${item.q}</p>
+      ${optionsHtml}`;
+
+    quizArea.querySelectorAll('.quiz-option').forEach(btn => {
+      btn.addEventListener('click', () => handleAnswer(btn.dataset.value));
+    });
+  }
+
+  async function handleAnswer(selected) {
+    const item = questions[currentIndex];
+    if (selected === item.answer) correctCount++;
+
+    currentIndex++;
+
+    if (currentIndex < questions.length) {
+      renderQuestion();
+    } else {
+      await finishQuiz();
+    }
+  }
+
+  async function finishQuiz() {
+    const allCorrect = correctCount === questions.length;
+
+    quizArea.style.display = 'none';
+    resultArea.style.display = 'block';
+
+    await supabaseClient
+      .from('trivia_submissions')
+      .insert([{ user_id: currentUser.id, correct: allCorrect }]);
+
+    resultArea.innerHTML = allCorrect
+      ? `<p style="font-size:18px; color:var(--palm); margin-bottom:16px;">Perfect score! You're entered into tonight's jackpot split.</p><a href="index.html" class="rules-cta">Back to Gist</a>`
+      : `<p style="font-size:18px; margin-bottom:16px;">You got ${correctCount} of ${questions.length} right. Perfect scores only for tonight's jackpot — try again tomorrow!</p><a href="index.html" class="rules-cta">Back to Gist</a>`;
+  }
+
+  (async () => {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+      document.getElementById('loggedOutNotice').style.display = 'block';
+      return;
+    }
+
+    currentUser = user;
+    document.getElementById('triviaBody').style.display = 'block';
+    renderQuestion();
+  })();
+</script>
+</body>
+</html>
