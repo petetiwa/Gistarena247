@@ -186,25 +186,8 @@
 <a href="register.html?role=worker" class="btn-outline-light">Become a Worker</a>
 </div>
 </div>
-<div class="gig-grid">
-<a class="gig-card" href="job-detail.html" style="color:inherit;">
-<span class="gig-tag mono">HOME SERVICES</span>
-<h3>Generator Technician</h3>
-<div class="gig-loc mono">Lekki, Lagos · Today</div>
-<div class="gig-price">₦25,000/day</div>
-</a>
-<div class="gig-card">
-<span class="gig-tag mono">EVENTS</span>
-<h3>Weekend Event Decorator</h3>
-<div class="gig-loc mono">Wuse, Abuja · This week</div>
-<div class="gig-price">₦60,000/project</div>
-</div>
-<div class="gig-card">
-<span class="gig-tag mono">LOGISTICS</span>
-<h3>Delivery Rider</h3>
-<div class="gig-loc mono">Port Harcourt · Daily</div>
-<div class="gig-price">₦8,000/day</div>
-</div>
+<div class="gig-grid" id="marketplaceGrid">
+<p style="color:var(--paper);">Loading listings...</p>
 </div>
 </section>
 </main>
@@ -325,6 +308,32 @@
     }
     col.innerHTML = html;
   });
+
+  // ---------- Marketplace: latest 3 real job listings ----------
+  const marketplaceGrid = document.getElementById('marketplaceGrid');
+
+  const { data: jobs, error: jobsError } = await supabaseClient
+    .from('jobs')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(3);
+
+  function renderJobCard(job) {
+    const when = new Date(job.created_at).toLocaleDateString();
+    return `
+      <a class="gig-card" href="job-detail.html?id=${job.id}">
+        <span class="gig-tag mono">${job.category.toUpperCase()}</span>
+        <h3>${job.title}</h3>
+        <div class="gig-loc mono">${job.location} · ${when}</div>
+        <div class="gig-price">${job.price}</div>
+      </a>`;
+  }
+
+  if (jobsError || !jobs || jobs.length === 0) {
+    marketplaceGrid.innerHTML = `<p style="color:var(--paper);">No jobs posted yet. <a href="post-job.html" style="color:var(--gold);">Post the first one</a>.</p>`;
+  } else {
+    marketplaceGrid.innerHTML = jobs.map(renderJobCard).join('');
+  }
 })();
 </script>
 </body>
