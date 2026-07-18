@@ -807,6 +807,57 @@
   margin-bottom:24px;
 }
 .payout-warning strong{color:#c0392b;}
+  /* ---------- WALLET DASHBOARD ---------- */
+.wallet-wrap{max-width:520px; margin:0 auto; padding:40px 24px 60px; display:flex; flex-direction:column; gap:24px;}
+.wallet-card{
+  border:2px solid var(--ink);
+  padding:28px 24px;
+  background:var(--paper);
+}
+.wallet-label{font-size:12px; color:var(--slate); display:block; margin-bottom:8px;}
+.wallet-balance{
+  font-family:'Archivo Black', sans-serif;
+  font-size:clamp(32px, 8vw, 44px);
+  color:var(--ink);
+  margin-bottom:20px;
+}
+.wallet-progress-track{
+  width:100%;
+  height:10px;
+  background:var(--line);
+  border-radius:6px;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+.wallet-progress-fill{
+  height:100%;
+  width:0%;
+  background:var(--palm);
+  border-radius:6px;
+  transition:width .4s ease;
+}
+.wallet-progress-caption{font-size:12px; color:var(--slate);}
+.wallet-card h2{font-size:16px; margin-bottom:10px;}
+.wallet-sub{font-size:14px; color:var(--slate); margin-bottom:20px;}
+
+.wallet-card select:disabled,
+.wallet-card input:disabled{
+  background:#eceae6;
+  color:#9a978f;
+  cursor:not-allowed;
+  border-color:var(--line);
+}
+.wallet-card select:not(:disabled),
+.wallet-card input:not(:disabled){
+  border-color:var(--ink);
+}
+#resolveNameBtn:disabled,
+#payoutSubmitBtn:disabled{
+  opacity:0.45;
+  cursor:not-allowed;
+}
+
+  
 
 
 
