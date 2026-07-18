@@ -856,6 +856,13 @@
   opacity:0.45;
   cursor:not-allowed;
 }
+  /* ---------- LIVE TRIVIA: quiz option buttons ---------- */
+.quiz-option{
+  color:var(--paper);
+  border-color:rgba(250,247,242,0.3);
+}
+.quiz-option:hover{background:rgba(250,247,242,0.08);}
+
 
   
 
