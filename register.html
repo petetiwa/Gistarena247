@@ -11,133 +11,131 @@
 <script src="supabase-config.js"></script>
 </head>
 <body>
-
 <a href="#main" class="skip-link">Skip to content</a>
 
 <header>
-  <div class="header-inner">
-    <a href="index.html" class="logo">GIST<span>ARENA</span>247</a>
-    <div class="header-actions">
-      <a href="login.html" class="btn-ghost">Login</a>
-      <a href="register.html" class="btn-solid">Register</a>
-      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-  <div class="ticker-bar" aria-label="Latest updates">
-    <div class="ticker-track">
-      <span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
-      <span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
-      <span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
-      <!-- duplicate for seamless loop -->
-      <span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
-      <span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
-      <span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
-      <span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
-    </div>
-  </div>
+<div class="header-inner">
+<a href="index.html" class="logo">GIST<span>ARENA</span>247</a>
+<div class="header-actions">
+<a href="login.html" class="btn-ghost">Login</a>
+<a href="register.html" class="btn-solid">Register</a>
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+<span></span><span></span><span></span>
+</button>
+</div>
+</div>
+<div class="ticker-bar" aria-label="Latest updates">
+<div class="ticker-track">
+<span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
+<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
+</div>
+</div>
 </header>
 
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <nav class="drawer" id="drawer" aria-label="Main menu">
-  <div class="drawer-head">
-    <span class="logo" style="font-size:18px;">MENU</span>
-    <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
-  </div>
-  <div class="drawer-nav">
-    <span class="divider-label">READ</span>
-    <a href="index.html">Home</a>
-    <a href="news.html">News</a>
-    <a href="entertainment.html">Entertainment</a>
-    <a href="business.html">Business</a>
-    <a href="sports.html">Sports</a>
-    <span class="divider-label">CONTRIBUTE</span>
-    <a href="post-news.html">Post News</a>
-    <a href="my-posts.html">My Posts</a>
-    <span class="divider-label">WORK</span>
-    <a href="jobs.html">Marketplace</a>
-     <a href="post-job.html">Post a Job</a> 
-    <a href="jobs.html">Find Workers</a>
-    <a href="register.html?role=worker">Become a Worker</a>
-    <span class="divider-label">ACCOUNT</span>
-    <a href="login.html">Login</a>
-    <a href="register.html">Register</a>
-  </div>
+<div class="drawer-head">
+<span class="logo" style="font-size:18px;">MENU</span>
+<button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
+</div>
+<div class="drawer-nav">
+<span class="divider-label">READ</span>
+<a href="index.html">Home</a>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+<span class="divider-label">CONTRIBUTE</span>
+<a href="post-news.html">Post News</a>
+<a href="my-posts.html">My Posts</a>
+<span class="divider-label">WORK</span>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="jobs.html">Find Workers</a>
+<a href="register.html?role=worker">Become a Worker</a>
+<span class="divider-label">ACCOUNT</span>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
 </nav>
+
 <main id="main">
-  <div class="auth-wrap">
-    <div class="auth-card">
-      <span class="eyebrow mono">JOIN GISTARENA247</span>
-      <h1>Create Account</h1>
-      <p class="auth-sub">Choose how you'd like to use Gistarena247.</p>
+<div class="auth-wrap">
+<div class="auth-card">
+<span class="eyebrow mono">JOIN GISTARENA247</span>
+<h1>Create Account</h1>
+<p class="auth-sub">Takes less than a minute — no ID required to get started.</p>
 
-      <div class="role-toggle" id="roleToggle">
-        <div class="role-option active" data-role="reader">
-          <span class="mono">READ &amp; BROWSE</span>
-          <span class="role-label">Reader</span>
-        </div>
-        <div class="role-option" data-role="worker">
-          <span class="mono">FIND GIGS</span>
-          <span class="role-label">Worker</span>
-        </div>
-      </div>
+<div class="payout-warning">
+⚠️ <strong>CRITICAL:</strong> Ensure your Full Legal Name matches the exact name on your commercial bank account. Discrepancies will permanently lock your payouts at withdrawal time.
+</div>
 
-      <form id="registerForm">
-        <div class="field">
-          <label for="reg-name">Full name</label>
-          <input type="text" id="reg-name" placeholder="Your name" required>
-        </div>
-        <div class="field">
-          <label for="reg-email">Email or phone number</label>
-          <input type="text" id="reg-email" placeholder="you@example.com" required>
-        </div>
-        <div class="field">
-          <label for="reg-city">City</label>
-          <select id="reg-city">
-            <option>Lagos</option>
-            <option>Abuja</option>
-            <option>Port Harcourt</option>
-            <option>Ibadan</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="reg-pass">Password</label>
-          <input type="password" id="reg-pass" placeholder="••••••••" required>
-        </div>
-        <p id="regMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
-        <button type="submit" class="auth-submit" id="regSubmitBtn">Create Account</button>
-      </form>
+<form id="registerForm">
+<div class="field">
+<label for="reg-name">Full legal name</label>
+<input type="text" id="reg-name" placeholder="As it appears on your bank account" required>
+</div>
 
-      <p class="auth-foot">Already have an account? <a href="login.html">Log in</a></p>
-    </div>
-  </div>
+<div class="field">
+<label for="reg-phone">Nigerian phone number</label>
+<input type="tel" id="reg-phone" placeholder="080XXXXXXXX" inputmode="numeric" required>
+</div>
+
+<div class="field">
+<label for="reg-pass">Secure password</label>
+<input type="password" id="reg-pass" placeholder="At least 8 characters" minlength="8" required>
+</div>
+
+<p id="regMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+
+<button type="submit" class="auth-submit" id="regSubmitBtn">Create Account</button>
+</form>
+
+<p class="auth-foot">Already have an account? <a href="login.html">Log in</a></p>
+</div>
+</div>
 </main>
 
+<footer>
+<div class="footer-grid">
+<div class="footer-brand">
+<span class="logo">GIST<span style="color:var(--ember);">ARENA</span>247</span>
+<p>Local news and honest work, in one place. Built for Nigeria, updated every day.</p>
+</div>
+<div>
+<h4>READ</h4>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+</div>
+<div>
+<h4>WORK</h4>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="jobs.html">Find Workers</a>
+<a href="register.html?role=worker">Become a Worker</a>
+</div>
+<div>
+<h4>ACCOUNT</h4>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Gistarena247. All rights reserved.</span>
+<span>Lagos · Abuja · Port Harcourt</span>
+</div>
+</footer>
+
+<script src="script.js"></script>
 <script>
-  const roleToggle = document.getElementById('roleToggle');
-  let selectedRole = 'reader';
-  if (roleToggle) {
-    const options = roleToggle.querySelectorAll('.role-option');
-    // Pre-select worker tab if arriving from a "Become a Worker" link
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('role') === 'worker') {
-      options.forEach(o => o.classList.remove('active'));
-      roleToggle.querySelector('[data-role="worker"]').classList.add('active');
-      selectedRole = 'worker';
-    }
-    options.forEach(opt => {
-      opt.addEventListener('click', () => {
-        options.forEach(o => o.classList.remove('active'));
-        opt.classList.add('active');
-        selectedRole = opt.dataset.role;
-      });
-    });
+  // ---------- Pure helpers: normalize + validate a Nigerian phone number ----------
+  function normalizeNigerianPhone(raw) {
+    const digits = raw.replace(/\D/g, '');
+    if (digits.startsWith('234') && digits.length === 13) return '0' + digits.slice(3);
+    if (digits.startsWith('0') && digits.length === 11) return digits;
+    return null;
   }
 
   const registerForm = document.getElementById('registerForm');
@@ -152,69 +150,66 @@
 
   registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = document.getElementById('reg-name').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
-    const city = document.getElementById('reg-city').value;
+
+    const fullName = document.getElementById('reg-name').value.trim();
+    const rawPhone = document.getElementById('reg-phone').value.trim();
     const password = document.getElementById('reg-pass').value;
+
+    const phone = normalizeNigerianPhone(rawPhone);
+    if (!phone) {
+      showRegMessage('Please enter a valid Nigerian phone number (e.g. 08012345678).', true);
+      return;
+    }
 
     regSubmitBtn.disabled = true;
     regSubmitBtn.textContent = 'Creating account...';
 
+    // Supabase Auth requires an email or a configured SMS provider for phone sign-up.
+    // Since only phone is collected from the user, we derive a technical (invisible
+    // to the user) email from their phone number so Auth still works normally.
+    const technicalEmail = phone + '@users.gistarena247.app';
+
     const { data, error } = await supabaseClient.auth.signUp({
-      email: email,
+      email: technicalEmail,
       password: password,
       options: {
         data: {
-          full_name: name,
-          city: city,
-          role: selectedRole
+          full_name: fullName,
+          phone: phone
         }
       }
     });
 
-    regSubmitBtn.disabled = false;
-    regSubmitBtn.textContent = 'Create Account';
-
     if (error) {
+      regSubmitBtn.disabled = false;
+      regSubmitBtn.textContent = 'Create Account';
       showRegMessage(error.message, true);
       return;
     }
 
-    showRegMessage("Account created! You can now log in.", false);
+    // Insert the matching profile row. RLS only allows a user to insert their own row,
+    // so this only succeeds because data.user.id === auth.uid() for this new session.
+    const { error: profileError } = await supabaseClient
+      .from('profiles')
+      .insert([
+        {
+          id: data.user.id,
+          full_name: fullName,
+          phone: phone
+        }
+      ]);
+
+    regSubmitBtn.disabled = false;
+    regSubmitBtn.textContent = 'Create Account';
+
+    if (profileError) {
+      showRegMessage(profileError.message, true);
+      return;
+    }
+
+    showRegMessage('Account created! You can now log in.', false);
     registerForm.reset();
   });
 </script>
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <span class="logo">GIST<span style="color:var(--ember);">ARENA</span>247</span>
-      <p>Local news and honest work, in one place. Built for Nigeria, updated every day.</p>
-    </div>
-    <div>
-      <h4>READ</h4>
-      <a href="news.html">News</a>
-      <a href="entertainment.html">Entertainment</a>
-      <a href="business.html">Business</a>
-      <a href="sports.html">Sports</a>
-    </div>
-    <div>
-      <h4>WORK</h4>
-      <a href="jobs.html">Marketplace</a>
-       <a href="post-job.html">Post a Job</a> 
-      <a href="jobs.html">Find Workers</a>
-      <a href="register.html?role=worker">Become a Worker</a>
-    </div>
-    <div>
-      <h4>ACCOUNT</h4>
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 Gistarena247. All rights reserved.</span>
-    <span>Lagos · Abuja · Port Harcourt</span>
-  </div>
-</footer>
-<script src="script.js"></script>
 </body>
 </html>
