@@ -1,48 +1,36 @@
-  const menuToggle = document.getElementById('menuToggle');
-  const drawer = document.getElementById('drawer');
-  const drawerOverlay = document.getElementById('drawerOverlay');
-  const drawerClose = document.getElementById('drawerClose');
+const menuToggle = document.getElementById('menuToggle');
+const drawer = document.getElementById('drawer');
+const drawerOverlay = document.getElementById('drawerOverlay');
+const drawerClose = document.getElementById('drawerClose');
 
-  function openDrawer(){
-    drawer.classList.add('open');
-    drawerOverlay.classList.add('open');
-    menuToggle.setAttribute('aria-expanded','true');
-    drawerClose.focus();
-  }
-  function closeDrawer(){
-    drawer.classList.remove('open');
-    drawerOverlay.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded','false');
-    menuToggle.focus();
-  }
-  menuToggle.addEventListener('click', openDrawer);
-  drawerClose.addEventListener('click', closeDrawer);
-  drawerOverlay.addEventListener('click', closeDrawer);
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
-  });
+function openDrawer(){
+  drawer.classList.add('open');
+  drawerOverlay.classList.add('open');
+  menuToggle.setAttribute('aria-expanded','true');
+  drawerClose.focus();
+}
+function closeDrawer(){
+  drawer.classList.remove('open');
+  drawerOverlay.classList.remove('open');
+  menuToggle.setAttribute('aria-expanded','false');
+  menuToggle.focus();
+}
+menuToggle.addEventListener('click', openDrawer);
+drawerClose.addEventListener('click', closeDrawer);
+drawerOverlay.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+});
 
-  // close drawer when a nav link is clicked
-  document.querySelectorAll('.drawer-nav a').forEach(a=>{
-    a.addEventListener('click', closeDrawer);
-  });
-// ---------- DYNAMIC TICKER: marketplace + gamified prompts ----------
+// close drawer when a nav link is clicked
+document.querySelectorAll('.drawer-nav a').forEach(a=>{
+  a.addEventListener('click', closeDrawer);
+});
+
+// ---------- LIVE TICKER: real jobs + real news from Supabase ----------
 (function () {
   const track = document.querySelector('.ticker-track');
   if (!track) return;
-
-  const tickerItems = [
-    { tag: 'hot',  label: 'BREAKING',      text: 'Lagos–Ibadan expressway repairs to begin next phase' },
-    { tag: 'gig',  label: 'HIRE NOW',      text: 'Generator technician needed, Lekki — ₦25,000/day' },
-    { tag: 'game', label: 'LIVE AT 8PM',   text: "Tonight's Trivia Jackpot is ₦10,000!" },
-    { tag: 'hot',  label: 'GIST',          text: 'Afrobeats star teases surprise collab at Lagos show' },
-    { tag: 'game', label: 'PREDICT & WIN', text: 'Will the Third Mainland Bridge be clear at 5:00 PM?' },
-    { tag: 'gig',  label: 'HIRE NOW',      text: 'Event decorator for weekend wedding, Abuja — ₦60,000' },
-    { tag: 'hot',  label: 'BUSINESS',      text: 'Naira firms slightly against dollar in parallel market' },
-    { tag: 'game', label: 'STREAK',        text: "Log in today to keep your Daily Streak alive — don't lose your Fuel Points!" },
-    { tag: 'gig',  label: 'HIRE NOW',      text: 'Delivery riders wanted, Port Harcourt — daily pay' },
-    { tag: 'game', label: 'AUCTION LIVE',  text: 'Reverse Auction closing soon — lowest unique bid wins a free ad slot' }
-  ];
 
   function renderTickerItems(items) {
     return items.map(item =>
@@ -50,9 +38,40 @@
     ).join('');
   }
 
-  track.innerHTML = renderTickerItems(tickerItems) + renderTickerItems(tickerItems);
-})();
+  async function loadTicker() {
+    try {
+      const { data: jobs } = await supabaseClient
+        .from('jobs')
+        .select('title, description')
+        .order('created_at', { ascending: false })
+        .limit(4);
 
+      const { data: posts } = await supabaseClient
+        .from('posts')
+        .select('title, category')
+        .order('created_at', { ascending: false })
+        .limit(4);
+
+      const items = [];
+
+      (jobs || []).forEach(job => {
+        items.push({ tag: 'gig', label: 'HIRE NOW', text: job.title });
+      });
+
+      (posts || []).forEach(post => {
+        items.push({ tag: 'hot', label: (post.category || 'GIST').toUpperCase(), text: post.title });
+      });
+
+      if (items.length === 0) return;
+
+      track.innerHTML = renderTickerItems(items) + renderTickerItems(items);
+    } catch (err) {
+      console.error('Ticker load failed:', err);
+    }
+  }
+
+  loadTicker();
+})();
 
 // ---------- 30-SECOND ATTENTION TRACKER ----------
 (function () {
@@ -75,4 +94,3 @@
     }, 6000);
   }, 30000);
 })();
-
