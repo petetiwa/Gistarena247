@@ -12,6 +12,7 @@
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
+
 <header>
 <div class="header-inner">
 <a href="index.html" class="logo">GIST<span>ARENA</span>247</a>
@@ -26,21 +27,11 @@
 <div class="ticker-bar" aria-label="Latest updates">
 <div class="ticker-track">
 <span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
-<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
-<span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
-<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
-<span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
-<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
-<!-- duplicate for seamless loop -->
-<span class="ticker-item"><span class="tag-hot">BREAKING</span> Lagos–Ibadan expressway repairs to begin next phase</span>
-<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Generator technician needed, Lekki — ₦25,000/day</span>
-<span class="ticker-item"><span class="tag-hot">GIST</span> Afrobeats star teases surprise collab at Lagos show</span>
-<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Event decorator for weekend wedding, Abuja — ₦60,000</span>
-<span class="ticker-item"><span class="tag-hot">BUSINESS</span> Naira firms slightly against dollar in parallel market</span>
-<span class="ticker-item"><span class="tag-gig">NEW GIG</span> Delivery riders wanted, Port Harcourt — daily pay</span>
+<span class="ticker-item"><span class="tag-gig">HIRE NOW</span> Generator technician needed, Lekki — ₦25,000/day</span>
 </div>
 </div>
 </header>
+
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <nav class="drawer" id="drawer" aria-label="Main menu">
 <div class="drawer-head">
@@ -62,13 +53,12 @@
 <a href="post-job.html">Post a Job</a>
 <a href="jobs.html">Find Workers</a>
 <a href="register.html?role=worker">Become a Worker</a>
-<span class="divider-label">PLAY</span>
-<a href="gist-arena-nav.html">Play &amp; Win Today</a>
 <span class="divider-label">ACCOUNT</span>
 <a href="login.html">Login</a>
 <a href="register.html">Register</a>
 </div>
 </nav>
+
 <main id="main">
 <section class="hero">
 <div class="hero-lead" id="heroLead">
@@ -81,40 +71,47 @@
 <span>6 min read</span>
 </div>
 </div>
-<aside class="trending">
-<h2 class="mono">TRENDING NOW</h2>
-<div id="trendingList">
-<div class="trend-item">
-<span class="trend-num">01</span>
-<span class="trend-text"><a href="#">Comedian's new skit has Naija Twitter in stitches</a></span>
+
+<aside class="gamify-teaser">
+<span class="gamify-badge mono">100% FREE · NO CASH NEEDED</span>
+<h2 class="mono">PLAY &amp; WIN TODAY</h2>
+<div class="gamify-list">
+<a class="gamify-item" href="game-rules.html?game=streak">
+<span class="gamify-icon">🔥</span>
+<div>
+<strong>Daily Streak</strong>
+<p>Log in daily to build your streak and earn Fuel Points.</p>
 </div>
-<div class="trend-item">
-<span class="trend-num">02</span>
-<span class="trend-text"><a href="#">Super Eagles name squad for upcoming qualifiers</a></span>
+</a>
+<a class="gamify-item" href="game-rules.html?game=trivia">
+<span class="gamify-icon">🧠</span>
+<div>
+<strong>Live Trivia</strong>
+<p>Join tonight's live trivia at 8PM for a real cash jackpot.</p>
 </div>
-<div class="trend-item">
-<span class="trend-num">03</span>
-<span class="trend-text"><a href="#">Fintech startup raises new funding round</a></span>
+</a>
+<a class="gamify-item" href="game-rules.html?game=auction">
+<span class="gamify-icon">🔨</span>
+<div>
+<strong>Reverse Auctions</strong>
+<p>Bid your time, not your money — lowest unique bid wins.</p>
 </div>
-<div class="trend-item">
-<span class="trend-num">04</span>
-<span class="trend-text"><a href="#">Fuel prices hold steady at major stations</a></span>
+</a>
 </div>
-<div class="trend-item">
-<span class="trend-num">05</span>
-<span class="trend-text"><a href="#">Rainy season warning issued for coastal states</a></span>
-</div>
-</div>
+<a href="#" class="gamify-cta">Download Android APK (Free Data)</a>
 </aside>
 </section>
+
 <div id="news"></div>
 <div id="entertainment"></div>
 <div id="business"></div>
 <div id="sports"></div>
+
 <div class="section-head">
 <h2>Top Stories</h2>
 <a href="#">View all</a>
 </div>
+
 <div class="cat-grid">
 <div class="cat-col" id="catcol-news">
 <span class="cat-label mono">NEWS</span>
@@ -177,6 +174,7 @@
 </article>
 </div>
 </div>
+
 <section class="marketplace" id="marketplace">
 <div class="mkt-head">
 <div>
@@ -210,6 +208,7 @@
 </div>
 </section>
 </main>
+
 <footer>
 <div class="footer-grid">
 <div class="footer-brand">
@@ -241,110 +240,91 @@
 <span>Lagos · Abuja · Port Harcourt</span>
 </div>
 </footer>
+
 <script src="script.js"></script>
 <script>
 (async () => {
-const { data: posts, error } = await supabaseClient
-.from('posts')
-.select('*')
-.order('created_at', { ascending: false });
+  const { data: posts, error } = await supabaseClient
+    .from('posts')
+    .select('*')
+    .order('created_at', { ascending: false });
 
-if (error || !posts || posts.length === 0) return;
+  if (error || !posts || posts.length === 0) return;
 
-// Lead story slideshow = up to 4 most recent posts
-const slideCount = Math.min(4, posts.length);
-const slides = posts.slice(0, slideCount);
-const heroLead = document.getElementById('heroLead');
+  const slideCount = Math.min(4, posts.length);
+  const slides = posts.slice(0, slideCount);
+  const heroLead = document.getElementById('heroLead');
 
-let slidesHtml = '';
-slides.forEach((post, i) => {
-const when = new Date(post.created_at).toLocaleDateString();
-const imageHtml = post.image_url ? `<img src="${post.image_url}" alt="" class="hero-slide-image">` : '';
-slidesHtml += `
-<div class="hero-slide${i === 0 ? ' active' : ''}" data-slide="${i}">
-<span class="eyebrow mono">${post.category.toUpperCase()}</span>
-<h1><a href="post-view.html?id=${post.id}" style="color:inherit;">${post.title}</a></h1>
-${imageHtml}
-<p>${post.excerpt}</p>
-<div class="hero-meta">
-<span>${when}</span>
-</div>
-</div>`;
-});
+  let slidesHtml = '';
+  slides.forEach((post, i) => {
+    const when = new Date(post.created_at).toLocaleDateString();
+    const imageHtml = post.image_url ? `<img src="${post.image_url}" alt="" class="hero-slide-image">` : '';
+    slidesHtml += `
+      <div class="hero-slide${i === 0 ? ' active' : ''}" data-slide="${i}">
+        <span class="eyebrow mono">${post.category.toUpperCase()}</span>
+        <h1><a href="post-view.html?id=${post.id}" style="color:inherit;">${post.title}</a></h1>
+        ${imageHtml}
+        <p>${post.excerpt}</p>
+        <div class="hero-meta">
+          <span>${when}</span>
+        </div>
+      </div>`;
+  });
 
-let dotsHtml = '';
-if (slideCount > 1) {
-dotsHtml = '<div class="hero-dots">';
-slides.forEach((post, i) => {
-dotsHtml += `<button class="hero-dot${i === 0 ? ' active' : ''}" data-dot="${i}" aria-label="Show story ${i + 1}"></button>`;
-});
-dotsHtml += '</div>';
-}
+  let dotsHtml = '';
+  if (slideCount > 1) {
+    dotsHtml = '<div class="hero-dots">';
+    slides.forEach((post, i) => {
+      dotsHtml += `<button class="hero-dot${i === 0 ? ' active' : ''}" data-dot="${i}" aria-label="Show story ${i + 1}"></button>`;
+    });
+    dotsHtml += '</div>';
+  }
 
-heroLead.innerHTML = slidesHtml + dotsHtml;
+  heroLead.innerHTML = slidesHtml + dotsHtml;
 
-if (slideCount > 1) {
-let current = 0;
-const slideEls = heroLead.querySelectorAll('.hero-slide');
-const dotEls = heroLead.querySelectorAll('.hero-dot');
+  if (slideCount > 1) {
+    let current = 0;
+    const slideEls = heroLead.querySelectorAll('.hero-slide');
+    const dotEls = heroLead.querySelectorAll('.hero-dot');
 
-function showSlide(index) {
-slideEls.forEach(el => el.classList.remove('active'));
-dotEls.forEach(el => el.classList.remove('active'));
-slideEls[index].classList.add('active');
-dotEls[index].classList.add('active');
-current = index;
-}
+    function showSlide(index) {
+      slideEls.forEach(el => el.classList.remove('active'));
+      dotEls.forEach(el => el.classList.remove('active'));
+      slideEls[index].classList.add('active');
+      dotEls[index].classList.add('active');
+      current = index;
+    }
 
-dotEls.forEach((dot, i) => {
-dot.addEventListener('click', () => showSlide(i));
-});
+    dotEls.forEach((dot, i) => {
+      dot.addEventListener('click', () => showSlide(i));
+    });
 
-setInterval(() => {
-showSlide((current + 1) % slideCount);
-}, 6000);
-}
+    setInterval(() => {
+      showSlide((current + 1) % slideCount);
+    }, 6000);
+  }
 
-// Trending = next 5 most recent (excluding the slideshow posts)
-const trending = posts.slice(slideCount, slideCount + 5);
-const trendingList = document.getElementById('trendingList');
-if (trending.length > 0) {
-let trendHtml = '';
-trending.forEach((post, i) => {
-const num = String(i + 1).padStart(2, '0');
-trendHtml += `
-<div class="trend-item">
-<span class="trend-num">${num}</span>
-<span class="trend-text"><a href="post-view.html?id=${post.id}">${post.title}</a></span>
-</div>`;
-});
-trendingList.innerHTML = trendHtml;
-} else {
-trendingList.innerHTML = '<p style="color:rgba(250,247,242,0.7); font-size:14px;">Nothing else trending yet.</p>';
-}
+  const categories = ['News', 'Entertainment', 'Business', 'Sports'];
+  categories.forEach((cat) => {
+    const catPosts = posts.filter(p => p.category === cat).slice(0, 3);
+    const col = document.getElementById('catcol-' + cat.toLowerCase());
+    if (!col) return;
 
-// Top Stories grid = latest 3 per category
-const categories = ['News', 'Entertainment', 'Business', 'Sports'];
-categories.forEach((cat) => {
-const catPosts = posts.filter(p => p.category === cat).slice(0, 3);
-const col = document.getElementById('catcol-' + cat.toLowerCase());
-if (!col) return;
-
-let html = `<span class="cat-label mono">${cat.toUpperCase()}</span>`;
-if (catPosts.length === 0) {
-html += `<p style="font-size:14px; color:var(--slate); padding:12px 0;">No ${cat} stories yet.</p>`;
-} else {
-catPosts.forEach((post) => {
-const when = new Date(post.created_at).toLocaleDateString();
-html += `
-<article>
-<h3><a href="post-view.html?id=${post.id}">${post.title}</a></h3>
-<time>${when}</time>
-</article>`;
-});
-}
-col.innerHTML = html;
-});
+    let html = `<span class="cat-label mono">${cat.toUpperCase()}</span>`;
+    if (catPosts.length === 0) {
+      html += `<p style="font-size:14px; color:var(--slate); padding:12px 0;">No ${cat} stories yet.</p>`;
+    } else {
+      catPosts.forEach((post) => {
+        const when = new Date(post.created_at).toLocaleDateString();
+        html += `
+          <article>
+            <h3><a href="post-view.html?id=${post.id}">${post.title}</a></h3>
+            <time>${when}</time>
+          </article>`;
+      });
+    }
+    col.innerHTML = html;
+  });
 })();
 </script>
 </body>
