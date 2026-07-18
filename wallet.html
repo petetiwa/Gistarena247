@@ -39,4 +39,322 @@
 <button class="drawer-close" id="drawerClose" aria-label="Close menu">&times;</button>
 </div>
 <div class="drawer-nav">
-<span class="divider-label">READ
+<span class="divider-label">READ</span>
+<a href="index.html">Home</a>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+<span class="divider-label">CONTRIBUTE</span>
+<a href="post-news.html">Post News</a>
+<a href="my-posts.html">My Posts</a>
+<span class="divider-label">WORK</span>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="jobs.html">Find Workers</a>
+<a href="register.html?role=worker">Become a Worker</a>
+<span class="divider-label">ACCOUNT</span>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
+</nav>
+
+<main id="main">
+<div class="wallet-wrap">
+
+<div id="loggedOutNotice" class="post-notice" style="display:none;">
+<p style="margin-bottom:14px;">You need to be logged in to view your wallet.</p>
+<a href="login.html">Log in</a> or <a href="register.html">create an account</a>
+</div>
+
+<div id="walletBody" style="display:none;">
+
+<div class="wallet-card">
+<span class="wallet-label mono">WALLET BALANCE</span>
+<div class="wallet-balance" id="walletBalance">₦0.00</div>
+
+<div class="wallet-progress-track">
+<div class="wallet-progress-fill" id="walletProgressFill"></div>
+</div>
+<div class="wallet-progress-caption mono" id="walletProgressCaption">₦0.00 of ₦3,000.00 to unlock payouts</div>
+</div>
+
+<div class="wallet-card">
+<h2 class="mono">BANK PAYOUT</h2>
+<p class="wallet-sub" id="payoutLockMessage">Reach ₦3,000.00 to unlock withdrawal to your bank account.</p>
+
+<form id="payoutForm">
+<div class="field">
+<label for="bank-select">Bank</label>
+<select id="bank-select" disabled>
+<option value="">Select your bank</option>
+<option value="Access Bank">Access Bank</option>
+<option value="GTBank">GTBank</option>
+<option value="OPay">OPay</option>
+<option value="Moniepoint">Moniepoint</option>
+</select>
+</div>
+
+<div class="field">
+<label for="account-number">Account number</label>
+<input type="text" id="account-number" inputmode="numeric" maxlength="10" placeholder="0123456789" disabled>
+</div>
+
+<button type="button" class="btn-ghost" id="resolveNameBtn" style="width:100%; margin-bottom:14px;" disabled>Resolve Account Name</button>
+
+<div class="field" id="resolvedNameField" style="display:none;">
+<label>Resolved account name</label>
+<input type="text" id="resolved-name" readonly>
+</div>
+
+<p id="payoutMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+
+<button type="submit" class="auth-submit" id="payoutSubmitBtn" disabled>Withdraw</button>
+</form>
+</div>
+
+</div>
+</div>
+</main>
+
+<footer>
+<div class="footer-grid">
+<div class="footer-brand">
+<span class="logo">GIST<span style="color:var(--ember);">ARENA</span>247</span>
+<p>Local news and honest work, in one place. Built for Nigeria, updated every day.</p>
+</div>
+<div>
+<h4>READ</h4>
+<a href="news.html">News</a>
+<a href="entertainment.html">Entertainment</a>
+<a href="business.html">Business</a>
+<a href="sports.html">Sports</a>
+</div>
+<div>
+<h4>WORK</h4>
+<a href="jobs.html">Marketplace</a>
+<a href="post-job.html">Post a Job</a>
+<a href="jobs.html">Find Workers</a>
+<a href="register.html?role=worker">Become a Worker</a>
+</div>
+<div>
+<h4>ACCOUNT</h4>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Gistarena247. All rights reserved.</span>
+<span>Lagos · Abuja · Port Harcourt</span>
+</div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+  const PAYOUT_TARGET = 3000.00;
+
+  const loggedOutNotice = document.getElementById('loggedOutNotice');
+  const walletBody = document.getElementById('walletBody');
+  const walletBalanceEl = document.getElementById('walletBalance');
+  const progressFill = document.getElementById('walletProgressFill');
+  const progressCaption = document.getElementById('walletProgressCaption');
+  const payoutLockMessage = document.getElementById('payoutLockMessage');
+  const bankSelect = document.getElementById('bank-select');
+  const accountNumberInput = document.getElementById('account-number');
+  const resolveNameBtn = document.getElementById('resolveNameBtn');
+  const resolvedNameField = document.getElementById('resolvedNameField');
+  const resolvedNameInput = document.getElementById('resolved-name');
+  const payoutForm = document.getElementById('payoutForm');
+  const payoutMessage = document.getElementById('payoutMessage');
+  const payoutSubmitBtn = document.getElementById('payoutSubmitBtn');
+
+  let currentUser = null;
+  let profile = null;
+  let resolvedName = null;
+
+  function formatNaira(amount) {
+    return '₦' + Number(amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function showPayoutMessage(text, isError) {
+    payoutMessage.textContent = text;
+    payoutMessage.style.display = 'block';
+    payoutMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
+  }
+
+  // ---------------------------------------------------------------
+  // MOCK VALIDATION FUNCTION (Simulation) — staging/testing only
+  // ---------------------------------------------------------------
+  // We're on the .dev staging environment with no live Flutterwave
+  // business API keys yet, and don't want to register a business
+  // account until staging is complete. This simulates what a real
+  // bank account resolution API (Paystack/Flutterwave) would return,
+  // so the full wallet flow — both the success path and the
+  // anti-fraud mismatch/lock path — can be tested end to end now.
+  //
+  // Test account number 1234567890 → always resolves to the
+  // logged-in user's own registered name (simulates a match).
+  // Any other account number → resolves to a random Nigerian name
+  // (simulates a mismatch, so the fraud-lock path can be tested).
+  //
+  // Replace this whole function with a real server-side call
+  // (Supabase Edge Function holding your Flutterwave secret key)
+  // once you're ready to go live with real payouts.
+  function simulateBankLookup(accountNumber, bankCode) {
+    const TEST_ACCOUNT_NUMBER = '1234567890';
+
+    const randomNigerianNames = [
+      'Chidi Kola',
+      'Fatima Musa',
+      'Ngozi Eze',
+      'Ibrahim Bello',
+      'Aisha Yusuf',
+      'Emeka Okafor',
+      'Blessing Adeyemi'
+    ];
+
+    if (accountNumber === TEST_ACCOUNT_NUMBER) {
+      return profile.full_name;
+    }
+
+    const randomIndex = Math.floor(Math.random() * randomNigerianNames.length);
+    return randomNigerianNames[randomIndex];
+  }
+
+  async function resolveAccountName(bankName, accountNumber) {
+    // Simulated network delay, standing in for the real API round-trip.
+    await new Promise(resolve => setTimeout(resolve, 900));
+    return simulateBankLookup(accountNumber, bankName);
+  }
+
+  function updateLockState() {
+    const balance = profile.wallet_balance || 0;
+    const unlocked = balance >= PAYOUT_TARGET;
+
+    bankSelect.disabled = !unlocked;
+    accountNumberInput.disabled = !unlocked;
+    resolveNameBtn.disabled = !unlocked;
+
+    payoutLockMessage.textContent = unlocked
+      ? 'Your wallet is unlocked — enter your bank details below to withdraw.'
+      : `Reach ${formatNaira(PAYOUT_TARGET)} to unlock withdrawal to your bank account.`;
+  }
+
+  function renderBalance() {
+    const balance = profile.wallet_balance || 0;
+    walletBalanceEl.textContent = formatNaira(balance);
+
+    const pct = Math.min(100, (balance / PAYOUT_TARGET) * 100);
+    progressFill.style.width = pct + '%';
+    progressCaption.textContent = `${formatNaira(balance)} of ${formatNaira(PAYOUT_TARGET)} to unlock payouts`;
+
+    updateLockState();
+  }
+
+  resolveNameBtn.addEventListener('click', async () => {
+    const bank = bankSelect.value;
+    const accountNumber = accountNumberInput.value.trim();
+
+    if (!bank || accountNumber.length !== 10) {
+      showPayoutMessage('Select a bank and enter a valid 10-digit account number first.', true);
+      return;
+    }
+
+    resolveNameBtn.disabled = true;
+    resolveNameBtn.textContent = 'Resolving...';
+
+    resolvedName = await resolveAccountName(bank, accountNumber);
+
+    resolveNameBtn.disabled = false;
+    resolveNameBtn.textContent = 'Resolve Account Name';
+
+    resolvedNameInput.value = resolvedName;
+    resolvedNameField.style.display = 'block';
+    payoutSubmitBtn.disabled = false;
+    payoutMessage.style.display = 'none';
+  });
+
+  payoutForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!resolvedName) {
+      showPayoutMessage('Resolve your account name before submitting.', true);
+      return;
+    }
+
+    // ---------------------------------------------------------------
+    // ANTI-FRAUD NAME MATCH: resolved bank name vs. registered legal name
+    // ---------------------------------------------------------------
+    const normalize = (s) => s.trim().toLowerCase().replace(/\s+/g, ' ');
+    const namesMatch = normalize(resolvedName) === normalize(profile.full_name);
+
+    payoutSubmitBtn.disabled = true;
+    payoutSubmitBtn.textContent = 'Checking...';
+
+    if (!namesMatch) {
+      await supabaseClient
+        .from('profiles')
+        .update({ payout_flagged: true })
+        .eq('id', currentUser.id);
+
+      payoutSubmitBtn.disabled = false;
+      payoutSubmitBtn.textContent = 'Withdraw';
+      showPayoutMessage(
+        "Name mismatch: the resolved bank account name doesn't match your registered legal name. This withdrawal has been blocked and flagged for manual review.",
+        true
+      );
+      return;
+    }
+
+    const bank = bankSelect.value;
+    const accountNumber = accountNumberInput.value.trim();
+
+    const { error } = await supabaseClient
+      .from('profiles')
+      .update({
+        bank_name: bank,
+        account_number: accountNumber,
+        payout_flagged: false
+      })
+      .eq('id', currentUser.id);
+
+    payoutSubmitBtn.disabled = false;
+    payoutSubmitBtn.textContent = 'Withdraw';
+
+    if (error) {
+      showPayoutMessage(error.message, true);
+      return;
+    }
+
+    showPayoutMessage('Name verified — withdrawal approved and bank details saved.', false);
+  });
+
+  (async () => {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+      loggedOutNotice.style.display = 'block';
+      return;
+    }
+
+    currentUser = user;
+
+    const { data, error } = await supabaseClient
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    if (error || !data) {
+      loggedOutNotice.style.display = 'block';
+      loggedOutNotice.querySelector('p').textContent = "Couldn't load your wallet. Please try again.";
+      return;
+    }
+
+    profile = data;
+    walletBody.style.display = 'block';
+    renderBalance();
+  })();
+</script>
+</body>
+</html>
