@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Rules — Gistarena247</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+</head>
+<body>
+
+<div class="rules-page">
+<div class="rules-topbar">
+<a href="index.html" class="rules-back">⬅ Back to Gist</a>
+<span class="balance-badge" id="balanceBadge">💼 Balance: ₦0.00</span>
+</div>
+
+<div class="rules-wrap" id="rulesWrap">
+<!-- filled by JS below -->
+</div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  const games = {
+    streak: {
+      icon: '🔥',
+      title: 'Daily Streak',
+      steps: [
+        'Log into GistArena247 every single day to automatically build up your activity streak tracking calendar.',
+        'Staying consistent unlocks multiplier tiers that grow your daily wallet earnings from ₦10.00 all the way up to ₦20.00 cash per day.',
+        'If you miss a single calendar day, your streak multiplier resets to zero, so check back daily to protect your balance!'
+      ],
+      cta: 'Start My Streak'
+    },
+    trivia: {
+      icon: '🧠',
+      title: 'Live Trivia',
+      steps: [
+        'Join the live countdown before 8:00 PM daily. Entry costs just ₦15.00 deducted from your earned in-app balance.',
+        'Answer 10 rapid-fire questions based strictly on the hyperlocal news articles and traffic updates published across GistArena247 earlier today.',
+        "Every player who achieves a perfect 10/10 scorecard instantly splits that night's Guaranteed Daily Match Jackpot directly into their app wallet!"
+      ],
+      cta: "Join Tonight's Trivia"
+    },
+    auction: {
+      icon: '🔨',
+      title: 'Reverse Auctions',
+      steps: [
+        'Browse premium marketplace items and lock in a strategic price bid using just ₦10.00 of your accumulated app credit.',
+        'To win the item, your bid must be the single lowest numerical number that absolutely zero other players on the platform duplicated.',
+        'Duplicated numbers are completely eliminated from the board, allowing you to walk away with high-end tools or electronics for pennies!'
+      ],
+      cta: 'Browse Live Auctions'
+    }
+  };
+
+  function renderRules(game) {
+    const stepsHtml = game.steps.map((text, i) => `
+      <div class="rules-step">
+        <span class="rules-step-num">${i + 1}</span>
+        <p>${text}</p>
+      </div>`).join('');
+
+    return `
+      <span class="rules-icon">${game.icon}</span>
+      <h1>${game.title}</h1>
+      <div class="rules-steps">${stepsHtml}</div>
+      <a href="#" class="rules-cta">${game.cta}</a>`;
+  }
+
+  function renderNotFound() {
+    return `
+      <h1>Game not found</h1>
+      <p style="color:rgba(250,247,242,0.7); margin-bottom:24px;">That game doesn't exist yet.</p>
+      <a href="index.html" class="rules-cta">Back to Home</a>`;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const gameKey = params.get('game');
+  const game = games[gameKey];
+
+  document.getElementById('rulesWrap').innerHTML = game ? renderRules(game) : renderNotFound();
+  if (game) document.title = game.title + ' Rules — Gistarena247';
+</script>
+</body>
+</html>
