@@ -918,7 +918,6 @@
 .poll-btn:hover{opacity:0.85;}
 .poll-btn-yes{background:var(--palm); color:var(--paper);}
 .poll-btn-no{background:#c0392b; color:var(--paper);}
-  
 /* ---------- MARKETPLACE: sub-tabs and product cards ---------- */
 .mkt-tabs{
   display:flex;
