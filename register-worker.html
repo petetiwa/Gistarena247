@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register as a Worker — Gistarena247</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+</head>
+<body>
+
+<div class="rules-page">
+<div class="rules-topbar">
+<a href="index.html#marketplace" class="rules-back">⬅ Back to Marketplace</a>
+</div>
+
+<div class="rules-wrap">
+
+<div id="loggedOutNotice" class="post-notice" style="display:none;">
+<p style="margin-bottom:14px;">You need to be logged in to register as a worker.</p>
+<a href="login.html" style="color:var(--gold);">Log in</a> or <a href="register.html" style="color:var(--gold);">create an account</a>
+</div>
+
+<div id="workerFormWrap" style="display:none;">
+<div class="rules-icon-badge">🛠️</div>
+<h1>Register as a Worker</h1>
+<p class="rules-tagline">List your skill so people nearby can hire you directly.</p>
+
+<div class="rules-card">
+<form id="workerForm">
+<div class="field">
+<label for="worker-name" style="color:rgba(250,247,242,0.85);">Full name</label>
+<input type="text" id="worker-name" required>
+</div>
+
+<div class="field">
+<label for="worker-skill" style="color:rgba(250,247,242,0.85);">Professional skill category</label>
+<select id="worker-skill">
+<option value="Mechanic">Mechanic</option>
+<option value="Electrician">Electrician</option>
+<option value="Plumber">Plumber</option>
+<option value="Tailor">Tailor</option>
+<option value="Dispatch Rider">Dispatch Rider</option>
+</select>
+</div>
+
+<div class="field">
+<label for="worker-location" style="color:rgba(250,247,242,0.85);">Location/Area</label>
+<input type="text" id="worker-location" placeholder="e.g. Lekki, Lagos" required>
+</div>
+
+<div class="field">
+<label for="worker-rate" style="color:rgba(250,247,242,0.85);">Base daily rate (₦)</label>
+<input type="text" id="worker-rate" placeholder="₦15,000/day" required>
+</div>
+
+<div class="field">
+<label for="worker-phone" style="color:rgba(250,247,242,0.85);">Contact WhatsApp/Phone number</label>
+<input type="tel" id="worker-phone" placeholder="080XXXXXXXX" required>
+</div>
+
+<p id="workerMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+
+<button type="submit" class="rules-play-btn" id="workerSubmitBtn">Register as a Worker</button>
+</form>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+  let currentUser = null;
+
+  const loggedOutNotice = document.getElementById('loggedOutNotice');
+  const workerFormWrap = document.getElementById('workerFormWrap');
+  const workerForm = document.getElementById('workerForm');
+  const workerMessage = document.getElementById('workerMessage');
+  const workerSubmitBtn = document.getElementById('workerSubmitBtn');
+
+  function showWorkerMessage(text, isError) {
+    workerMessage.textContent = text;
+    workerMessage.style.display = 'block';
+    workerMessage.style.color = isError ? '#e57373' : '#7fd4a8';
+  }
+
+  workerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const fullName = document.getElementById('worker-name').value.trim();
+    const skillCategory = document.getElementById('worker-skill').value;
+    const location = document.getElementById('worker-location').value.trim();
+    const dailyRate = document.getElementById('worker-rate').value.trim();
+    const contactPhone = document.getElementById('worker-phone').value.trim();
+
+    workerSubmitBtn.disabled = true;
+    workerSubmitBtn.textContent = 'Registering...';
+
+    const { error } = await supabaseClient.from('workers').insert([{
+      user_id: currentUser.id,
+      full_name: fullName,
+      skill_category: skillCategory,
+      location: location,
+      daily_rate: dailyRate,
+      contact_phone: contactPhone
+    }]);
+
+    workerSubmitBtn.disabled = false;
+    workerSubmitBtn.textContent = 'Register as a Worker';
+
+    if (error) {
+      showWorkerMessage(error.message, true);
+      return;
+    }
+
+    showWorkerMessage("You're listed! People nearby can now find and hire you.", false);
+    workerForm.reset();
+  });
+
+  (async () => {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (!user) {
+      loggedOutNotice.style.display = 'block';
+      return;
+    }
+    currentUser = user;
+
+    // Pre-fill full name from the registration profile — still editable.
+    const { data: profile } = await supabaseClient
+      .from('profiles')
+      .select('full_name')
+      .eq('id', user.id)
+      .single();
+
+    if (profile && profile.full_name) {
+      document.getElementById('worker-name').value = profile.full_name;
+    }
+
+    workerFormWrap.style.display = 'block';
+  })();
+</script>
+</body>
+</html>
