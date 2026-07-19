@@ -189,8 +189,8 @@
 </div>
 
 <div id="gigsPanel" class="mkt-panel">
-<div class="gig-grid" id="marketplaceGrid">
-<p style="color:var(--paper);">Loading listings...</p>
+<div class="worker-grid" id="marketplaceGrid">
+<p style="color:var(--paper);">Loading workers...</p>
 </div>
 </div>
 
@@ -206,7 +206,7 @@
 </div>
 
 <div class="mkt-ctas">
-<button type="button" class="btn-gold" id="registerWorkerBtn">🛠️ Register as a Worker</button>
+<button type="button" class="btn-gold" id="registerWorkerBtn">💼 Post a Job/Gig</button>
 <button type="button" class="btn-outline-light" id="listItemBtn">🏷️ List an Item for Sale</button>
 </div>
 </section>
@@ -359,30 +359,34 @@
     col.innerHTML = html;
   });
 
-  // ---------- Marketplace: latest 3 real job listings ----------
+  // ---------- Marketplace: latest 3 real registered workers ----------
   const marketplaceGrid = document.getElementById('marketplaceGrid');
 
-  const { data: jobs, error: jobsError } = await supabaseClient
-    .from('jobs')
+  const { data: workers, error: workersError } = await supabaseClient
+    .from('workers')
     .select('*')
     .order('created_at', { ascending: false })
     .limit(3);
 
-  function renderJobCard(job) {
-    const when = new Date(job.created_at).toLocaleDateString();
+  function renderWorkerCard(worker) {
     return `
-      <a class="gig-card" href="job-detail.html?id=${job.id}">
-        <span class="gig-tag mono">${job.category.toUpperCase()}</span>
-        <h3>${job.title}</h3>
-        <div class="gig-loc mono">${job.location} · ${when}</div>
-        <div class="gig-price">${job.price}</div>
-      </a>`;
+      <div class="worker-card">
+        <span class="worker-card-category mono">${worker.skill_category.toUpperCase()}</span>
+        <h3 class="worker-card-name">⭐ ${worker.full_name}</h3>
+        <div class="worker-card-location mono">📍 ${worker.location}</div>
+        <p class="worker-card-bio">💼 ${worker.skill_category} • Available for hire</p>
+        <div class="worker-card-rate">💸 Rate: From ${worker.daily_rate}</div>
+        <div class="worker-card-actions">
+          <a class="btn-call" href="tel:${worker.contact_phone}">📞 Call Pro</a>
+          <a class="btn-whatsapp" href="https://wa.me/${worker.contact_phone.replace(/\D/g, '')}" target="_blank" rel="noopener">💬 WhatsApp</a>
+        </div>
+      </div>`;
   }
 
-  if (jobsError || !jobs || jobs.length === 0) {
-    marketplaceGrid.innerHTML = `<p style="color:var(--paper);">No jobs posted yet. <a href="post-job.html" style="color:var(--gold);">Post the first one</a>.</p>`;
+  if (workersError || !workers || workers.length === 0) {
+    marketplaceGrid.innerHTML = `<p style="color:var(--paper);">No workers registered yet. <a href="register-worker.html" style="color:var(--gold);">Be the first to register</a>.</p>`;
   } else {
-    marketplaceGrid.innerHTML = jobs.map(renderJobCard).join('');
+    marketplaceGrid.innerHTML = workers.map(renderWorkerCard).join('');
   }
 })();
 </script>
