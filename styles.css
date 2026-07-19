@@ -975,6 +975,84 @@
   font-size:13px;
   color:var(--ink);
 }
+  /* ---------- MARKETPLACE: segmented tab bar + product card overhaul ---------- */
+.mkt-tabs{
+  display:flex;
+  width:100%;
+  border-bottom:1px solid rgba(250,247,242,0.2);
+  margin-bottom:28px;
+}
+.mkt-tab{
+  flex:1 1 50%;
+  background:transparent;
+  border:none;
+  color:rgba(250,247,242,0.5);
+  font-family:'Archivo Black', sans-serif;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:0.02em;
+  padding:12px 8px;
+  cursor:pointer;
+  border-bottom:3px solid transparent;
+  transition:color .15s ease, border-color .15s ease;
+}
+.mkt-tab.active{
+  color:var(--gold);
+  border-bottom-color:var(--gold);
+}
+.mkt-tab:not(.active):hover{color:rgba(250,247,242,0.8);}
+
+.item-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:16px;
+  max-width:280px;
+  margin:0 auto;
+}
+.item-card{
+  background:var(--paper);
+  border:1px solid var(--line);
+  padding:16px;
+  text-align:center;
+}
+.item-image-box{
+  width:100%;
+  aspect-ratio:1 / 1;
+  background:#d8d8d6;
+  margin-bottom:14px;
+}
+.item-card h3{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:8px;
+  color:var(--ink);
+}
+.item-meta{
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink);
+}
+.mkt-sample-note{
+  color:rgba(250,247,242,0.65);
+  font-size:13px;
+  text-align:center;
+  margin-top:18px;
+}
+
+/* CTA buttons: equal-width side by side on larger screens, stacked on mobile */
+.mkt-ctas{
+  display:flex;
+  gap:14px;
+  margin-top:32px;
+}
+.mkt-ctas a{
+  flex:1;
+  text-align:center;
+}
+@media (max-width:520px){
+  .mkt-ctas{flex-direction:column;}
+}
+
 
 
 
