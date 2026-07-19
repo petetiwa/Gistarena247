@@ -864,6 +864,60 @@
 .quiz-option:hover{background:rgba(250,247,242,0.08);}
   /* ---------- MARKETPLACE: keep layout out of JS templates ---------- */
 .gig-card{color:inherit; text-decoration:none; display:block;}
+  
+/* ---------- DAILY PREDICTOR: interactive poll box ---------- */
+.poll-box{
+  background:rgba(250,247,242,0.04);
+  border:1px solid rgba(250,247,242,0.12);
+  border-radius:14px;
+  padding:24px 20px;
+  margin-top:8px;
+}
+.poll-header{
+  display:block;
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:0.05em;
+  margin-bottom:14px;
+}
+.poll-question{
+  font-family:'Source Serif 4', serif;
+  font-size:18px;
+  line-height:1.4;
+  color:var(--paper);
+  margin-bottom:18px;
+}
+.poll-details{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  font-size:12px;
+  color:rgba(250,247,242,0.65);
+  border-top:1px solid rgba(250,247,242,0.12);
+  border-bottom:1px solid rgba(250,247,242,0.12);
+  padding:12px 0;
+  margin-bottom:20px;
+}
+.poll-actions{
+  display:flex;
+  gap:10px;
+}
+.poll-btn{
+  flex:1;
+  padding:14px 10px;
+  border-radius:8px;
+  border:none;
+  font-family:'Archivo Black', sans-serif;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:0.01em;
+  cursor:pointer;
+  transition:opacity .15s ease;
+}
+.poll-btn:hover{opacity:0.85;}
+.poll-btn-yes{background:var(--palm); color:var(--paper);}
+.poll-btn-no{background:#c0392b; color:var(--paper);}
 
 
 
