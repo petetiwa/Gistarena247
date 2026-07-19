@@ -59,6 +59,68 @@
     text-decoration:none;
     box-sizing:border-box;
   }
+
+  /* ---------- POLL BOX OVERHAUL: matches rules-card premium style ---------- */
+  .poll-box{
+    background:#0f1115;
+    border:1px solid #242933;
+    border-radius:12px;
+    padding:20px;
+    box-sizing:border-box;
+  }
+  .poll-header{
+    display:block;
+    color:#bf8f38;
+    font-size:12px;
+    letter-spacing:0.05em;
+    margin-bottom:14px;
+  }
+  .poll-question{
+    font-family:'Source Serif 4', serif;
+    font-size:18px;
+    line-height:1.4;
+    color:rgba(250,247,242,0.95);
+    margin-bottom:18px;
+  }
+  .poll-details{
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content:space-between;
+    gap:12px;
+    font-size:12px;
+    color:rgba(250,247,242,0.65);
+    border-top:1px solid #242933;
+    border-bottom:1px solid #242933;
+    padding:12px 0;
+    margin-bottom:20px;
+  }
+  .poll-details span{white-space:nowrap;}
+  .poll-actions{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .poll-btn{
+    width:100%;
+    box-sizing:border-box;
+    background:#181c22;
+    border:1px solid #2f3540;
+    color:rgba(250,247,242,0.95);
+    font-family:'Archivo Black', sans-serif;
+    font-size:14px;
+    font-weight:bold;
+    text-align:center;
+    padding:12px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .poll-btn:hover,
+  .poll-btn:active,
+  .poll-btn:focus-visible{
+    background:#20262f;
+    border-color:#bf8f38;
+  }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
