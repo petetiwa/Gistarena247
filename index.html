@@ -181,16 +181,67 @@
 <h2>The Marketplace</h2>
 <p>Real gigs, real workers, real pay — post a job in minutes or find one near you today.</p>
 </div>
-<div class="mkt-ctas">
-<a href="jobs.html" class="btn-gold">Find Workers</a>
-<a href="register.html?role=worker" class="btn-outline-light">Become a Worker</a>
 </div>
+
+<div class="mkt-tabs">
+<button type="button" class="mkt-tab active" id="tabGigs">🛠️ Gigs &amp; Workers</button>
+<button type="button" class="mkt-tab" id="tabItems">🛍️ Items for Sale</button>
 </div>
+
+<div id="gigsPanel" class="mkt-panel">
 <div class="gig-grid" id="marketplaceGrid">
 <p style="color:var(--paper);">Loading listings...</p>
 </div>
+</div>
+
+<div id="itemsPanel" class="mkt-panel" style="display:none;">
+<div class="item-grid" id="itemsGrid">
+<div class="item-card">
+<div class="item-image-box">📱</div>
+<h3>iPhone 13 Pro Max</h3>
+<div class="item-meta"><strong>Ikeja · ₦450,000</strong></div>
+</div>
+<div class="item-card">
+<div class="item-image-box">⚡</div>
+<h3>Tiger 2.5KVA Generator</h3>
+<div class="item-meta"><strong>Yaba, Lagos · ₦180,000</strong></div>
+</div>
+<div class="item-card">
+<div class="item-image-box">💻</div>
+<h3>HP EliteBook Laptop</h3>
+<div class="item-meta"><strong>Wuse, Abuja · ₦320,000</strong></div>
+</div>
+</div>
+<p style="color:rgba(250,247,242,0.7); font-size:13px; margin-top:16px;">Sample listings shown — real items will appear here once sellers start posting.</p>
+</div>
+
+<div class="mkt-ctas">
+<a href="post-job.html" class="btn-gold">💼 Post a Job/Gig</a>
+<a href="#" class="btn-outline-light">🏷️ List an Item for Sale</a>
+</div>
 </section>
 </main>
+
+<script>
+  const tabGigs = document.getElementById('tabGigs');
+  const tabItems = document.getElementById('tabItems');
+  const gigsPanel = document.getElementById('gigsPanel');
+  const itemsPanel = document.getElementById('itemsPanel');
+
+  tabGigs.addEventListener('click', () => {
+    tabGigs.classList.add('active');
+    tabItems.classList.remove('active');
+    gigsPanel.style.display = 'block';
+    itemsPanel.style.display = 'none';
+  });
+
+  tabItems.addEventListener('click', () => {
+    tabItems.classList.add('active');
+    tabGigs.classList.remove('active');
+    itemsPanel.style.display = 'block';
+    gigsPanel.style.display = 'none';
+  });
+</script>
 
 <footer>
 <div class="footer-grid">
