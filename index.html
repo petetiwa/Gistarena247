@@ -206,8 +206,8 @@
 </div>
 
 <div class="mkt-ctas">
-<a href="post-job.html" class="btn-gold">💼 Post a Job/Gig</a>
-<a href="#" class="btn-outline-light">🏷️ List an Item for Sale</a>
+<button type="button" class="btn-gold" id="postJobBtn">💼 Post a Job/Gig</button>
+<button type="button" class="btn-outline-light" id="listItemBtn">🏷️ List an Item for Sale</button>
 </div>
 </section>
 </main>
@@ -231,6 +231,15 @@
     itemsPanel.style.display = 'block';
     gigsPanel.style.display = 'none';
   });
+
+  // ---------- Marketplace CTA routing: check session before sending to the form ----------
+  async function routeToForm(destination) {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    window.location.href = user ? destination : 'register.html';
+  }
+
+  document.getElementById('postJobBtn').addEventListener('click', () => routeToForm('post-job.html'));
+  document.getElementById('listItemBtn').addEventListener('click', () => routeToForm('post-item.html'));
 </script>
 
 <footer>

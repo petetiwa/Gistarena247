@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List an Item — Gistarena247</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+</head>
+<body>
+
+<div class="rules-page">
+<div class="rules-topbar">
+<a href="index.html#marketplace" class="rules-back">⬅ Back to Marketplace</a>
+</div>
+
+<div class="rules-wrap">
+
+<div id="loggedOutNotice" class="post-notice" style="display:none;">
+<p style="margin-bottom:14px;">You need to be logged in to list an item.</p>
+<a href="login.html" style="color:var(--gold);">Log in</a> or <a href="register.html" style="color:var(--gold);">create an account</a>
+</div>
+
+<div id="itemFormWrap" style="display:none;">
+<div class="rules-icon-badge">🏷️</div>
+<h1>List an Item for Sale</h1>
+<p class="rules-tagline">Real gadgets, tools, and gear — sold direct, no middleman.</p>
+
+<div class="rules-card">
+<form id="itemForm">
+<div class="field">
+<label for="item-title" style="color:rgba(250,247,242,0.85);">Item name</label>
+<input type="text" id="item-title" placeholder="e.g. iPhone 13 Pro Max" required>
+</div>
+
+<div class="field">
+<label for="item-condition" style="color:rgba(250,247,242,0.85);">Condition</label>
+<select id="item-condition">
+<option value="New">New</option>
+<option value="Used">Used</option>
+</select>
+</div>
+
+<div class="field">
+<label for="item-location" style="color:rgba(250,247,242,0.85);">Location/Area</label>
+<input type="text" id="item-location" placeholder="e.g. Ikeja, Lagos" required>
+</div>
+
+<div class="field">
+<label for="item-price" style="color:rgba(250,247,242,0.85);">Asking price (₦)</label>
+<input type="text" id="item-price" placeholder="₦450,000" required>
+</div>
+
+<p id="itemMessage" style="font-size:14px; margin-bottom:14px; display:none;"></p>
+
+<button type="submit" class="rules-play-btn" id="itemSubmitBtn">List Item</button>
+</form>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+  let currentUser = null;
+
+  const loggedOutNotice = document.getElementById('loggedOutNotice');
+  const itemFormWrap = document.getElementById('itemFormWrap');
+  const itemForm = document.getElementById('itemForm');
+  const itemMessage = document.getElementById('itemMessage');
+  const itemSubmitBtn = document.getElementById('itemSubmitBtn');
+
+  function showItemMessage(text, isError) {
+    itemMessage.textContent = text;
+    itemMessage.style.display = 'block';
+    itemMessage.style.color = isError ? '#e57373' : '#7fd4a8';
+  }
+
+  itemForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('item-title').value.trim();
+    const condition = document.getElementById('item-condition').value;
+    const location = document.getElementById('item-location').value.trim();
+    const price = document.getElementById('item-price').value.trim();
+
+    itemSubmitBtn.disabled = true;
+    itemSubmitBtn.textContent = 'Listing...';
+
+    const { error } = await supabaseClient.from('items').insert([
+      { title, condition, location, price, user_id: currentUser.id }
+    ]);
+
+    itemSubmitBtn.disabled = false;
+    itemSubmitBtn.textContent = 'List Item';
+
+    if (error) {
+      showItemMessage(error.message, true);
+      return;
+    }
+
+    showItemMessage("Item listed! Check the Marketplace's Items for Sale tab.", false);
+    itemForm.reset();
+  });
+
+  (async () => {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (!user) {
+      loggedOutNotice.style.display = 'block';
+      return;
+    }
+    currentUser = user;
+    itemFormWrap.style.display = 'block';
+  })();
+</script>
+</body>
+</html>
