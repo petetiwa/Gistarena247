@@ -997,6 +997,67 @@
 @media (max-width:520px){
   .mkt-ctas{flex-direction:column;}
 }
+  /* ---------- WORKER PROFILE CARDS ---------- */
+.worker-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+  gap:16px;
+}
+.worker-card{
+  background:var(--paper);
+  color:var(--ink);
+  padding:20px;
+  border:2px solid var(--ink);
+}
+.worker-card-category{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--ember);
+  display:inline-block;
+  margin-bottom:10px;
+}
+.worker-card-name{
+  font-size:18px;
+  margin-bottom:8px;
+  text-transform:none;
+  font-family:'Source Serif 4', serif;
+  font-weight:700;
+}
+.worker-card-location{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:#6b6862;
+  margin-bottom:10px;
+}
+.worker-card-bio{
+  font-size:14px;
+  color:var(--slate);
+  margin-bottom:14px;
+}
+.worker-card-rate{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:14px;
+  font-weight:700;
+  color:var(--palm);
+  margin-bottom:16px;
+}
+.worker-card-actions{
+  display:flex;
+  gap:10px;
+}
+.btn-call,
+.btn-whatsapp{
+  flex:1;
+  text-align:center;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  font-weight:600;
+  padding:10px 8px;
+  border-radius:6px;
+}
+.btn-call{background:#3a3f47; color:var(--paper);}
+.btn-whatsapp{background:#25D366; color:#fff;}
+
 
 
 
