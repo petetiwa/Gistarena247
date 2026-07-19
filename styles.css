@@ -975,6 +975,7 @@
   font-size:13px;
   color:var(--ink);
 }
+
   /* ---------- MARKETPLACE: segmented tab bar + product card overhaul ---------- */
 .mkt-tabs{
   display:flex;
