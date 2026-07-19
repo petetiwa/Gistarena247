@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Daily Predictor — Gistarena247</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+</head>
+<body>
+
+<div class="rules-page">
+<div class="rules-topbar">
+<a href="index.html" class="rules-back">⬅ Back to Gist</a>
+<span class="balance-badge" id="balanceBadge">🎁 Reward Credit: ₦0.00</span>
+</div>
+
+<div class="rules-wrap">
+
+<div class="rules-icon-badge">🗳️</div>
+<h1>The Daily Predictor</h1>
+<p class="rules-tagline">Forecast today's local trends, triple your stake</p>
+
+<div class="rules-steps">
+<div class="rules-step-card">
+<span class="rules-step-num">1</span>
+<p>Browse our daily prediction polls based on active hyperlocal news, local sport matches, and city traffic trends.</p>
+</div>
+<div class="rules-step-card">
+<span class="rules-step-num">2</span>
+<p>Spend just ₦5.00 of your earned reward credit to lock in your expert forecast before the daily lock-out timer cuts off.</p>
+</div>
+<div class="rules-step-card">
+<span class="rules-step-num">3</span>
+<p>If your prediction hits the bullseye, you instantly triple your stake into your wallet ledger, while incorrect entry pools roll straight into our 8:00 PM live trivia jackpot!</p>
+</div>
+</div>
+
+<div class="poll-box">
+<span class="poll-header mono">🗳️ Today's Traffic Forecast</span>
+<p class="poll-question">"Will the Third Mainland Bridge clear up by 5:00 PM following today's structural repairs?"</p>
+<div class="poll-details mono">
+<span>⏱️ Lockout in: 02h : 14m</span>
+<span>💸 Entry Fee: ₦5.00</span>
+</div>
+<div class="poll-actions">
+<button type="button" class="poll-btn poll-btn-yes" id="pollYesBtn">🟢 YES, IT WILL CLEAR</button>
+<button type="button" class="poll-btn poll-btn-no" id="pollNoBtn">🔴 NO, EXPECT GRIDLOCK</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+  // Mock click handlers only — proves the frontend event wiring works.
+  // Real version will deduct from wallet_balance and record the
+  // prediction in a predictions table once the backend is built.
+  function lockPrediction(choice) {
+    alert('Prediction Locked! ₦5.00 deducted from Reward Credit.');
+  }
+
+  document.getElementById('pollYesBtn').addEventListener('click', () => lockPrediction('yes'));
+  document.getElementById('pollNoBtn').addEventListener('click', () => lockPrediction('no'));
+</script>
+</body>
+</html>
