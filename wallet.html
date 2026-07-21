@@ -353,6 +353,12 @@
 
     profile = data;
     walletBody.style.display = 'block';
+
+    // TEMPORARY DEBUG — remove after diagnosing the balance mismatch
+    const debugBox = document.createElement('div');
+    debugBox.style.cssText = 'background:#fff3cd; border:2px solid #c0392b; padding:16px; margin-bottom:20px; font-family:monospace; font-size:12px; word-break:break-all;';
+    debugBox.innerHTML = '<strong>DEBUG INFO</strong><br>Logged-in user ID: ' + user.id + '<br>Profile full_name: ' + profile.full_name + '<br>Profile wallet_balance: ' + profile.wallet_balance + '<br>Raw type: ' + typeof profile.wallet_balance;
+    walletBody.insertBefore(debugBox, walletBody.firstChild);
     renderBalance();
   })();
 </script>
