@@ -1075,6 +1075,36 @@
 @media (min-width:768px){
   .hero-lead h1{font-size:2.4rem;}
 }
+  /* ---------- DESKTOP NAV: horizontal bar instead of drawer ---------- */
+@media (min-width:900px){
+  .menu-toggle{display:none;}
+  .drawer-overlay{display:none !important;}
+  .drawer{
+    position:static;
+    transform:none;
+    width:100%;
+    height:auto;
+    border-left:none;
+    border-bottom:2px solid var(--ink);
+  }
+  .drawer-head{display:none;}
+  .drawer-nav{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:4px;
+    padding:0 24px;
+    overflow:visible;
+  }
+  .drawer-nav .divider-label{display:none;}
+  .drawer-nav a{
+    display:inline-block;
+    font-size:13px;
+    padding:16px 12px;
+    border-bottom:none;
+  }
+}
+
 
 
 
