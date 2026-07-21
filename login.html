@@ -144,11 +144,33 @@
     loginMessage.style.color = isError ? '#c0392b' : 'var(--palm)';
   }
 
+  // ---------- Convert what she typed into the same technical email format used at registration ----------
+  function normalizeNigerianPhone(raw) {
+    const digits = raw.replace(/\D/g, '');
+    if (digits.startsWith('234') && digits.length === 13) return '0' + digits.slice(3);
+    if (digits.startsWith('0') && digits.length === 11) return digits;
+    return null;
+  }
+
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const email = document.getElementById('login-email').value.trim();
+    const rawInput = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-pass').value;
+
+    // If it looks like a phone number, convert it to the hidden technical
+    // email format used when the account was created. If it already looks
+    // like an email (has an @), use it as-is.
+    let email = rawInput;
+    if (!rawInput.includes('@')) {
+      const phone = normalizeNigerianPhone(rawInput);
+      if (!phone) {
+        loginSubmitBtn.disabled = false;
+        showLoginMessage('Enter a valid Nigerian phone number (e.g. 08012345678) or your email.', true);
+        return;
+      }
+      email = phone + '@users.gistarena247.app';
+    }
 
     loginSubmitBtn.disabled = true;
     loginSubmitBtn.textContent = 'Logging in...';
