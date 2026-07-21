@@ -1076,7 +1076,8 @@
   .hero-lead h1{font-size:2.4rem;}
 }
   /* ---------- DESKTOP NAV: horizontal bar instead of drawer ---------- */
-@media (min-width:900px){
+@media (min-width:700px){
+
   .menu-toggle{display:none;}
   .drawer-overlay{display:none !important;}
   .drawer{
@@ -1102,7 +1103,7 @@
     font-size:13px;
     padding:16px 12px;
     border-bottom:none;
-  }@media (min-width:700px){
+  
 
 }
   
