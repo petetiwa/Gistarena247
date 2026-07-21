@@ -1102,8 +1102,10 @@
     font-size:13px;
     padding:16px 12px;
     border-bottom:none;
-  }
+  }@media (min-width:700px){
+
 }
+  
 
 
 
