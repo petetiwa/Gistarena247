@@ -176,12 +176,7 @@
     margin-bottom:14px;
   }
 .hero-lead h1{font-size:1.5rem; line-height:1.3; letter-spacing:-0.5px; margin-bottom:16px; text-wrap:balance;}
-
-
-
-
-
-  .hero-lead p{font-size:17px; max-width:52ch; margin-bottom:20px; color:var(--slate);}
+ .hero-lead p{font-size:17px; max-width:52ch; margin-bottom:20px; color:var(--slate);}
   .hero-meta{
     font-family:'IBM Plex Mono', monospace;
     font-size:12px;
@@ -1112,6 +1107,19 @@
     padding-top:40px;
   }
 }/* ---------- SITE BACKGROUND + SECTION SPACING ---------- */
+body{
+  background:#F1E9D8;
+}
+.hero{margin-bottom:28px;}
+.marketplace{margin-bottom:28px;}
+.cat-grid{margin-bottom:28px;}
+footer{margin-top:12px;}
+@media (min-width:900px){
+  .hero{margin-bottom:40px;}
+  .marketplace{margin-bottom:40px;}
+  .cat-grid{margin-bottom:40px;}
+}
+/* ---------- SITE BACKGROUND + SECTION SPACING ---------- */
 body{
   background:#F1E9D8;
 }
