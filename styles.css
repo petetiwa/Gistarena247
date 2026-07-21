@@ -1102,8 +1102,7 @@
     display:inline-block;
     font-size:13px;
     padding:16px 12px;
-    border-bottom:none;
-  
+    border-bottom:none; 
 
 }
   /* ---------- MARKETPLACE: extra breathing room above it on mobile ---------- */
@@ -1112,7 +1111,21 @@
     margin-top:20px;
     padding-top:40px;
   }
+}/* ---------- SITE BACKGROUND + SECTION SPACING ---------- */
+body{
+  background:#F1E9D8;
 }
+.hero{margin-bottom:28px;}
+.marketplace{margin-bottom:28px;}
+.cat-grid{margin-bottom:28px;}
+footer{margin-top:12px;}
+@media (min-width:900px){
+  .hero{margin-bottom:40px;}
+  .marketplace{margin-bottom:40px;}
+  .cat-grid{margin-bottom:40px;}
+}
+
+  
 
   
 
