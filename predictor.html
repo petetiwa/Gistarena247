@@ -124,6 +124,21 @@
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
+<script>
+  (async () => {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if (!user) return;
+    const { data: profile } = await supabaseClient
+      .from('profiles')
+      .select('wallet_balance')
+      .eq('id', user.id)
+      .single();
+    if (profile) {
+      const balance = Number(profile.wallet_balance || 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('balanceBadge').textContent = '🎁 Reward Credit: ₦' + balance;
+    }
+  })();
+</script>
 </head>
 <body>
 
